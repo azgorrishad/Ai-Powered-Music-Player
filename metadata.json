@@ -1,0 +1,6 @@
+{
+  "name": "AURALIS",
+  "description": "Auralis AI Music Player with OpenRouter AI intelligence, 5-band studio equalizer, immersive visualizers, local music scanning, and offline audio vault.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

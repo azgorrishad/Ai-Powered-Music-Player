@@ -1,0 +1,553 @@
+AURALIS. COMPLETE PRODUCT REPAIR, LUXURY REDESIGN, AND AI MUSIC INTELLIGENCE MASTER PROMPT
+
+ROLE
+
+Act as a senior Android engineer, music streaming engineer, AI recommendation engineer, audio systems specialist, premium mobile product designer, and software quality auditor.
+
+You are working on my existing AURALIS AI Music Player project.
+
+Your mission is to transform the current application into a genuinely premium, intelligent, reliable music player with distinctive visual design, fast responses, accurate music recommendations, dependable playback, synchronized lyrics where available, intelligent shuffle, and a polished application icon.
+
+This is an implementation task, not a brainstorming exercise.
+
+Inspect the project, identify defects, repair the existing logic, redesign the interface, implement missing functionality, and verify the changes.
+
+Do not merely generate suggestions, mockups, placeholder screens, or a new frontend that looks functional but does nothing.
+
+CORE RULES
+
+1. Preserve existing working functionality and user data.
+2. Inspect before modifying.
+3. Fix root causes instead of hiding symptoms.
+4. Reuse the existing architecture when it is suitable.
+5. Do not create duplicate services for functionality that already exists.
+6. Do not replace working implementations with fake demonstrations.
+7. Do not remove features simply because they need debugging.
+8. Do not claim a feature works unless its actual behavior has been verified.
+9. Do not introduce hardcoded credentials, fake tracks, fake synchronization, or simulated download success.
+10. Prioritize reliability, audio quality, responsiveness, usability, and design quality over adding unnecessary features.
+
+PHASE 1. COMPLETE PROJECT AUDIT
+
+Inspect the complete source project before making changes.
+
+Pay special attention to the existing AudioEngine, MusicRepository, OpenRouterAiService, GeminiAiService, YouTubeStreamResolver, MusicPlayerViewModel, lyrics implementation, shuffle implementation, download logic, database, navigation, theme system, and launcher assets.
+
+Determine the actual relationships between these components.
+
+Identify duplicate logic, outdated dependencies, broken API calls, unsafe credential handling, lifecycle issues, incorrect state management, unnecessary network requests, and incomplete feature implementations.
+
+Audit the following areas.
+
+A. Build and configuration.
+B. Application startup and navigation.
+C. Local music discovery and metadata.
+D. Audio playback and background playback.
+E. YouTube search, source resolution, and playback.
+F. AI provider configuration and request handling.
+G. Music recommendation relevance.
+H. Smart shuffle and queue management.
+I. Lyrics retrieval and synchronization.
+J. Equalizer and audio effects.
+K. Downloads and offline playback.
+L. Playlists, favorites, history, and analytics.
+M. Theme consistency and screen design.
+N. Application icon, splash screen, and branding.
+O. Performance, memory usage, battery consumption, and error handling.
+
+Create a prioritized internal defect list. Fix critical defects first, then complete missing functionality, and finally refine the visual experience.
+
+Do not stop after producing the audit report. Continue implementing the repairs.
+
+PHASE 2. FIX THE APPLICATION'S LOGIC SYSTEM
+
+Establish one reliable source of truth for the currently playing track, playback queue, player state, progress, repeat mode, shuffle mode, selected output, and audio-effect settings.
+
+The interface, AI agent, queue, and audio engine must always agree about what is playing.
+
+Fix inconsistent state updates, duplicate playback events, stale track references, incorrect queue indexes, race conditions, repeated initialization, and navigation-related playback interruptions.
+
+Make all important actions predictable.
+
+When a user taps a track, the application must play that exact track.
+
+When a user selects a recommendation, the selected recommendation must be the track that plays.
+
+When a user selects a YouTube result, the resulting audio must correspond to that specific selection.
+
+When a user changes screens, playback state must not unexpectedly reset.
+
+When a user restarts the application, restore appropriate settings, playlists, history, and queue state without falsely reporting unavailable audio as playable.
+
+Never use a successful-looking interface state as a substitute for successful underlying operations.
+
+PHASE 3. MAKE AURALIS A PROPER AI-POWERED MUSIC PLAYER
+
+OpenRouter should be the primary generative AI provider.
+
+Inspect the existing OpenRouter integration and repair it rather than adding another competing AI implementation.
+
+Remove the unnecessary Gemini dependency from the primary AI workflow. Keep one clear AI configuration and request-handling path.
+
+Use configurable, supported OpenRouter models. Do not assume a particular model identifier will remain available forever.
+
+Allow the user to configure their API key and model, test connectivity, view useful error messages, and retry failed requests.
+
+Never embed a private API key in the distributed application. Use protected credential storage for personal configurations and a secure backend for shared public-service credentials.
+
+Make API calls asynchronous and prevent unnecessary requests from blocking the interface.
+
+Build a proper AI music intelligence layer that understands the user's request, inspects available music, ranks relevant candidates, validates the selected tracks, and produces actionable results.
+
+AI DJ
+
+Make the AI DJ a useful music curator rather than a generic chatbot.
+
+It should understand requests such as:
+
+- Play relaxing music.
+- Find upbeat Bangla songs.
+- Recommend music similar to the current track.
+- Create a playlist for studying.
+- Find songs with a similar sound but a different artist.
+- Play more music from this artist.
+- Avoid songs I have recently skipped.
+- Build a playlist around a selected genre or mood.
+- Explain why a particular song was recommended.
+
+The AI must work with the actual available catalogue.
+
+If the requested song is unavailable, say so. Do not invent a track or substitute an unrelated song without explaining the substitution.
+
+AI MAESTRO
+
+Repair natural-language command interpretation and action execution.
+
+Support appropriate commands for playback, queue management, search, playlist creation, shuffle, repeat, equalizer presets, navigation, and recommendations.
+
+Validate all proposed actions before executing them.
+
+Never execute arbitrary model-generated instructions. Use explicitly supported actions and validated parameters.
+
+Return concise explanations of completed actions. If an action fails, report the real failure.
+
+MOOD INTELLIGENCE
+
+Improve mood-based discovery using available track metadata, user-selected context, listening history, genres, tempo, energy, and other reliable features.
+
+Support moods and listening situations such as focus, relaxation, energetic workouts, late-night listening, romantic music, acoustic sessions, nostalgia, and discovery.
+
+Do not assume that every track has accurate mood metadata. Use confidence-aware ranking and allow the user to correct results.
+
+Distinguish genuine AI-generated recommendations from local fallback recommendations.
+
+OFFLINE INTELLIGENCE
+
+Basic music playback, library management, and local recommendation logic must continue to work without an internet connection.
+
+If the AI provider is unavailable, preserve basic playback and offer local recommendations when possible.
+
+Do not block the music player while waiting for an AI response.
+
+PHASE 4. MAKE API CALLS FASTER AND MORE RELIABLE
+
+Optimize the entire request lifecycle rather than merely shortening prompts.
+
+Inspect network timeouts, request duplication, serialization, response parsing, retry behavior, connection reuse, and unnecessary sequential operations.
+
+Implement sensible request timeouts, cancellation, limited retries for transient failures, and clear loading and error states.
+
+Do not retry permanent failures indefinitely. Respect rate limits and retry guidance.
+
+Avoid making multiple identical requests when a previous result can be safely reused.
+
+Cache appropriate results such as track metadata, artwork references, search results, and recommendation candidates. Give cached data a clear refresh policy.
+
+Use smaller, focused prompts for simple tasks and reserve more complex model calls for tasks that actually need them.
+
+Use structured responses where appropriate. Validate model output before using it.
+
+Keep AI calls off the main thread. Cancel obsolete searches and recommendation requests when the user changes their selection.
+
+Prioritize perceived speed. Display useful local results immediately when possible, then enrich them with network results.
+
+Show meaningful status information when a request is running, completed, cancelled, or failed.
+
+Do not compromise recommendation quality or data correctness simply to reduce latency.
+
+PHASE 5. FIX YOUTUBE SEARCH AND PLAYBACK
+
+This is a critical feature.
+
+Audit the complete flow from user query to search results, selected result, source resolution, player preparation, and actual playback.
+
+Find why a selected YouTube song might fail, play unrelated audio, resolve the wrong source, or take too long to start.
+
+Repair the existing YouTubeStreamResolver and related playback code if their approach is appropriate.
+
+SEARCH ACCURACY
+
+- Search for the exact user query.
+- Display accurate result titles, artists or channel names, artwork, and durations where available.
+- Distinguish official music videos, audio uploads, live performances, remixes, covers, and other versions when the source provides that information.
+- Preserve the identity of the selected result throughout the playback process.
+- Never silently replace the selected song with a random result.
+- Clearly report unavailable, removed, restricted, or unsupported content.
+
+PLAYBACK SPEED
+
+- Avoid repeating the same search or source-resolution request unnecessarily.
+- Cancel obsolete resolution requests when the user selects another song.
+- Use caching only where the source and its terms permit it.
+- Minimize avoidable delays between selection and playback.
+- Prepare playback efficiently without starting the wrong track.
+- Handle expired media references and temporary network failures safely.
+- Prevent duplicate playback initialization and unnecessary player recreation.
+
+SOURCE AND POLICY REQUIREMENTS
+
+Use legitimate, supported YouTube playback and integration methods that comply with applicable platform terms.
+
+Do not implement unauthorized stream extraction, access-control circumvention, or downloading of protected YouTube audio.
+
+If the existing resolver depends on an unsupported extraction method, replace that dependency with a compliant integration or redesign the feature to explain the available options honestly.
+
+Do not pretend that an ordinary YouTube link is a direct audio stream.
+
+If a particular YouTube playback method cannot provide the intended background playback or audio-only experience under applicable restrictions, state the limitation and provide a supported alternative.
+
+PHASE 6. REBUILD THE AI MUSIC RECOMMENDATION SYSTEM
+
+Make recommendations genuinely relevant, not merely plausible-looking.
+
+Audit the current mood shuffle, recommendation ranking, metadata, fallback algorithms, and listening history.
+
+Use a hybrid recommendation approach.
+
+1. Candidate discovery.
+
+Collect valid candidates from the user's local library and supported online sources.
+
+2. Relevance ranking.
+
+Consider the user's requested mood, genre, artist, language, energy, tempo, acoustic characteristics, and similarity to the selected track where reliable information exists.
+
+3. Personalization.
+
+Use genuine behavior such as favorites, full plays, skips, repeats, playlist additions, and explicit preferences.
+
+4. Availability validation.
+
+Before returning a recommendation, confirm that the track exists and that its source is available for the intended playback method.
+
+5. Diversity.
+
+Prevent recommendations from repeatedly selecting the same artist, the same song, or nearly identical versions unless the user specifically requests them.
+
+6. Feedback.
+
+Let users like, dislike, save, skip, or request alternatives. Use this feedback to improve subsequent recommendations.
+
+7. Explanation.
+
+Provide a short, evidence-based reason for a recommendation, such as matching genre, similar tempo, or the user's listening preferences.
+
+Do not invent audio features, listening history, popularity, artist details, or user preferences.
+
+Do not let the AI invent catalogue entries and send them directly to the player.
+
+Separate recommendation generation from source resolution. A recommended song should not be treated as playable until the relevant source has been identified and validated.
+
+If the catalogue is small or metadata is missing, communicate that limitation and return the best available results.
+
+PHASE 7. IMPLEMENT A REAL SMART SHUFFLE SYSTEM
+
+Repair the existing shuffle and smart-shuffle functionality.
+
+Ordinary shuffle should use the actual playback queue and avoid unnecessary repetitions.
+
+Smart Shuffle should consider:
+
+- The current track and its musical characteristics.
+- Similarity between tracks.
+- The user's listening preferences.
+- Recently played songs.
+- Tracks recently skipped.
+- Favorite artists and genres.
+- User-selected mood and energy.
+- Queue diversity.
+- Whether a candidate is actually available for playback.
+
+Create a sensible balance between familiarity and discovery.
+
+Avoid repeatedly selecting the same tracks, even when the queue is changed or the application is reopened.
+
+Do not make shuffle depend entirely on a generative AI request. A fast, reliable local ranking system should handle the immediate queue behavior. AI can enrich candidate selection when network access is available.
+
+Define predictable behavior for ordinary shuffle, smart shuffle, repeat-one, repeat-all, and repeat-off.
+
+Show the active mode clearly.
+
+When smart shuffle is enabled, preserve the existing queue where appropriate and introduce relevant candidates without unexpectedly discarding the user's choices.
+
+Test small queues, large libraries, duplicate tracks, unavailable files, repeated taps, rapid mode switching, and offline use.
+
+PHASE 8. IMPLEMENT SPOTIFY-STYLE LYRICS EXPERIENCE
+
+Create a polished synchronized-lyrics experience inspired by the usability of leading music players. Do not copy another product's exact interface.
+
+The lyrics screen should include:
+
+- A clean, immersive layout.
+- Album artwork and track identification.
+- Clear typography with excellent readability.
+- A current-line highlight.
+- Automatic scrolling to the active line.
+- Smooth transitions between lyric lines.
+- Manual scrolling without the interface immediately fighting the user.
+- A clear way to return to automatic synchronization.
+- Loading, unavailable, and error states.
+- A useful fallback for plain, unsynchronized lyrics.
+
+SYNCHRONIZATION
+
+Use reliable timestamped lyric data when available.
+
+Synchronize the highlighted line with the actual playback position, not a timer that merely advances independently.
+
+Handle seeking, pausing, resuming, playback-speed changes, track changes, and temporary interruptions.
+
+Avoid excessive UI recomposition and jitter.
+
+If only plain lyrics are available, display them without pretending they are synchronized.
+
+LYRIC SOURCES
+
+Inspect the current lyrics implementation and improve its reliability.
+
+Use legitimate lyric APIs or sources that permit the intended use. Respect licensing, attribution, caching restrictions, and applicable terms.
+
+Do not assume that lyrics can legally be copied or scraped from any website.
+
+Do not generate fake lyrics to fill an empty screen.
+
+If no suitable lyric source is configured, show a clear unavailable state and keep playback fully functional.
+
+PHASE 9. TRANSFORM AURALIS INTO A LUXURY MUSIC PLAYER
+
+The current interface must be evaluated critically. Do not preserve weak visual decisions merely because they already exist.
+
+Create a distinctive luxury design system with a mature visual identity.
+
+BRAND DIRECTION
+
+AURALIS should feel like a sophisticated music and audio product.
+
+Use a restrained combination of obsidian black, graphite, champagne gold, platinum, and carefully controlled aurora accents.
+
+Avoid excessive gradients, generic glowing cards, random decorative shapes, childish AI illustrations, oversized controls, and repetitive template layouts.
+
+Premium design requires precise spacing, strong typography, high-quality artwork presentation, balanced composition, and excellent usability.
+
+EVERY MAJOR SCREEN MUST HAVE ITS OWN VISUAL IDENTITY
+
+Home. Design an editorial music dashboard with refined artwork, personalized discovery, and a clear hierarchy.
+
+Library. Use a sophisticated collection-management layout with efficient search, filters, album grids, artist views, and track lists.
+
+Now Playing. Create an immersive full-screen listening experience with prominent artwork, elegant controls, and subtle audio-reactive motion.
+
+AI DJ. Create a futuristic but restrained music-curation environment with a well-designed conversation interface and actionable recommendations.
+
+Lyrics. Use a distraction-free, typography-led experience with synchronized line highlighting and smooth scrolling.
+
+Equalizer. Design a precision audio studio with clear controls, useful presets, and visible active states.
+
+Playlists. Create a premium gallery of music collections with strong artwork and practical management controls.
+
+Downloads. Use a clean, information-dense storage interface that clearly communicates availability and progress.
+
+Listening Insights. Use a polished data-visualization layout based only on real user activity.
+
+Settings. Use a refined, restrained control center with clear categories and useful descriptions.
+
+These screens must not be identical layouts with different accent colors. Vary their composition, visual hierarchy, artwork treatment, depth, and interaction patterns while maintaining consistent branding.
+
+THEME SYSTEM
+
+Implement persistent, coordinated themes.
+
+Obsidian. Deep black, graphite, and subtle metallic accents.
+
+Aurora. Midnight blue, restrained violet, and atmospheric highlights.
+
+Titanium. Charcoal, silver, and precise industrial details.
+
+Ember. Dark bronze, warm amber, and muted copper.
+
+Allow users to preview and switch themes. Preserve their selection across restarts.
+
+Use individual screen identities without allowing themes to damage readability, accessibility, or consistency.
+
+Keep the interface responsive and efficient on ordinary Android devices.
+
+PHASE 10. CREATE A NEW PREMIUM APPLICATION ICON
+
+Redesign the AURALIS launcher icon.
+
+Create an original abstract A monogram integrated with a sonic ring, waveform, or acoustic aperture.
+
+Use an obsidian-black foundation with a refined metallic champagne-gold or platinum emblem and a restrained aurora accent.
+
+The icon should be recognizable at small sizes, geometrically balanced, visually simple, and distinct from generic music-player icons.
+
+Avoid generic musical notes, cluttered waveforms, excessive glow, tiny text, and unnecessary decorative borders.
+
+Update the actual launcher assets and application configuration, including the required adaptive icon resources.
+
+Ensure the icon looks good against different launcher backgrounds and that its appearance matches the AURALIS visual identity.
+
+Update the splash screen and relevant loading visuals to match the new identity.
+
+Do not stop at producing a logo preview. Implement the icon in the application.
+
+PHASE 11. AUDIO QUALITY AND BACKGROUND PLAYBACK
+
+Inspect the audio engine and make background playback dependable.
+
+Ensure the application correctly handles:
+
+- Media session and system playback controls.
+- Notification and lock-screen controls.
+- Headphones and Bluetooth devices.
+- Audio focus and interruptions.
+- Seeking and queue updates.
+- Playback errors and recovery.
+- App backgrounding and restoration.
+- Supported equalizer and audio effects.
+- Unsupported audio effects on particular devices.
+
+Avoid creating multiple competing player instances.
+
+Ensure audio effects attach to the correct player session and are released properly.
+
+Do not claim that an effect is active when it is unsupported or has not been applied.
+
+Keep sound controls responsive and prevent audio processing from blocking the UI.
+
+PHASE 12. DOWNLOADS, STORAGE, AND DATA INTEGRITY
+
+Audit download-related functions and distinguish database status from actual stored media.
+
+If a track is downloadable under the relevant source's terms, store the actual audio and verify its availability before marking the download complete.
+
+If the source does not permit downloading, do not bypass that restriction. Explain the limitation and support a permitted alternative.
+
+Provide clear progress, cancellation, retry, storage usage, deletion, and recovery behavior.
+
+Keep user-created playlists, favorites, preferences, and legitimate local music records intact during upgrades.
+
+Remove fabricated sample histories and fake device synchronization records from production behavior.
+
+If synchronization is incomplete, show the real configuration state rather than pretending remote data has been transferred.
+
+PHASE 13. PERFORMANCE AND STABILITY
+
+Optimize startup, scrolling, artwork loading, search, player initialization, lyrics updates, AI requests, and theme transitions.
+
+Prevent memory leaks, duplicate background jobs, stale coroutines, repeated network calls, and unnecessary database queries.
+
+Use efficient image loading and avoid loading every piece of album artwork into memory at once.
+
+Keep expensive operations off the main thread.
+
+Use cancellation when the user navigates away from a request or selects another track.
+
+Avoid battery-intensive visual effects that run unnecessarily when the Now Playing screen is not visible.
+
+Preserve a responsive interface during poor network conditions.
+
+Test long listening sessions, large libraries, low-memory situations, and repeated screen transitions.
+
+PHASE 14. BUG FIXING AND VERIFICATION
+
+Do not treat a successful compilation as proof that the application works.
+
+Build and verify the application after the modifications.
+
+Run available automated tests and resolve relevant failures.
+
+Verify the actual user experience for the following scenarios.
+
+1. Fresh installation and initial permissions.
+2. Scanning a local music library.
+3. Playing a selected track.
+4. Seeking, pausing, resuming, skipping, and repeat modes.
+5. Background playback and notification controls.
+6. Searching YouTube and selecting the exact result.
+7. Handling unavailable or restricted YouTube content.
+8. Configuring OpenRouter and testing connectivity.
+9. Generating relevant AI music recommendations.
+10. Switching between local and AI-assisted recommendations.
+11. Smart shuffle with small and large queues.
+12. Lyrics loading, synchronization, seeking, and missing lyrics.
+13. Equalizer changes on supported and unsupported devices.
+14. Downloading permitted audio and testing offline playback.
+15. Switching themes and restarting the application.
+16. Restoring playlists, favorites, and preferences.
+17. Handling network loss, API errors, rate limits, and timeouts.
+18. Rapid navigation and repeated playback actions.
+19. Long listening sessions and resource usage.
+20. Verifying the actual launcher icon and splash screen.
+
+Do not introduce fake test results.
+
+If the environment cannot execute Android builds or run the application, state which checks remain unverified and provide a practical manual test procedure.
+
+PHASE 15. FINAL DELIVERY
+
+Implement the fixes and redesign directly in the existing source project.
+
+Do not respond with only a report, a list of recommendations, or another proposed plan.
+
+After implementation, provide a concise but accurate report covering:
+
+- Root-cause bugs identified.
+- Playback and state-management repairs.
+- OpenRouter and AI improvements.
+- YouTube search and playback improvements.
+- AI recommendation and smart-shuffle improvements.
+- Lyrics implementation and synchronization support.
+- Visual redesign and theme system.
+- New launcher icon and splash screen.
+- Performance improvements.
+- Tests that actually passed.
+- Remaining limitations and required external configuration.
+
+Do not mark incomplete features as complete.
+
+If a feature depends on an unavailable service, API credential, licensing agreement, or external provider, clearly identify that dependency.
+
+FINAL ACCEPTANCE STANDARD
+
+AURALIS must not merely look premium. Its underlying behavior must match the interface.
+
+A selected song must be the song that plays.
+
+AI suggestions must be relevant to real available tracks.
+
+YouTube playback must use a valid supported source for the selected result.
+
+Lyrics must follow real playback timing when timestamped data is available.
+
+Smart shuffle must create a sensible, varied queue without unnecessary repetition.
+
+API calls must be responsive, cancellable, and resilient to failure.
+
+The application must retain its working features, protect credentials, and behave honestly when a service is unavailable.
+
+Every major screen must have its own polished visual identity.
+
+The launcher icon must be implemented, not merely previewed.
+
+Inspect the existing project. Find the root causes. Fix the logic. Improve the design. Implement the missing pieces. Test the results. Deliver a dependable premium music player rather than a convincing demonstration.

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Outer Acoustic Aperture Ring -->
+    <path
+        android:strokeWidth="2.5"
+        android:pathData="M54,54m-27,0a27,27 0 1,0 54,0a27,27 0 1,0 -54,0">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:startX="27"
+                android:startY="27"
+                android:endX="81"
+                android:endY="81"
+                android:type="linear">
+                <item android:color="#FCD34D" android:offset="0.0" />
+                <item android:color="#F59E0B" android:offset="0.5" />
+                <item android:color="#A855F7" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Inner Subtle Acoustic Ring -->
+    <path
+        android:strokeWidth="1.2"
+        android:pathData="M54,54m-21,0a21,21 0 1,0 42,0a21,21 0 1,0 -42,0">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:startX="33"
+                android:startY="33"
+                android:endX="75"
+                android:endY="75"
+                android:type="linear">
+                <item android:color="#40F59E0B" android:offset="0.0" />
+                <item android:color="#30A855F7" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Luxury A Monogram Apex & Outer Silhouette -->
+    <path
+        android:pathData="M54,30 L71,72 L62,72 L58,62 L50,62 L46,72 L37,72 Z M54,42 L52,56 L56,56 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="37"
+                android:startY="30"
+                android:endX="71"
+                android:endY="72"
+                android:type="linear">
+                <item android:color="#FFFBEB" android:offset="0.0" />
+                <item android:color="#FCD34D" android:offset="0.3" />
+                <item android:color="#F59E0B" android:offset="0.7" />
+                <item android:color="#D97706" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Acoustic Aperture Center Core -->
+    <path
+        android:pathData="M54,50m-2.5,0a2.5,2.5 0 1,0 5,0a2.5,2.5 0 1,0 -5,0"
+        android:fillColor="#00E5FF" />
+
+    <!-- Horizontal Sonic Crosswave Accent -->
+    <path
+        android:strokeWidth="2.0"
+        android:strokeLineCap="round"
+        android:pathData="M44,57 L64,57"
+        android:strokeColor="#00E5FF" />
+
+</vector>
