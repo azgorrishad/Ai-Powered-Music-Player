@@ -22,13 +22,9 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoAwesome
-import androidx.compose.material.icons.filled.Bolt
-import androidx.compose.material.icons.filled.FitnessCenter
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.SmartToy
-import androidx.compose.material.icons.filled.WaterDrop
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -48,7 +44,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
@@ -67,21 +62,17 @@ import com.example.ui.components.AuralisSectionHeader
 import com.example.ui.components.AuralisTokens
 import com.example.ui.components.AuralisTrackRow
 import com.example.ui.theme.BrushedSilver
-import com.example.ui.theme.ChampagneGold
 import com.example.ui.theme.DarkCharcoal
-import com.example.ui.theme.DarkSurface
 import com.example.ui.theme.DarkSurfaceBorder
 import com.example.ui.theme.DeepObsidianNoir
-import com.example.ui.theme.ElectricCyan
 import com.example.ui.theme.ImperialGold
-import com.example.ui.theme.LuminousViolet
 import com.example.ui.theme.MutedSlate
 import com.example.ui.theme.PlatinumWhite
 import com.example.ui.theme.SpaceGroteskFamily
 
 /**
  * Editorial-quality Music Home Screen for AURALIS.
- * Clean hierarchy, refined typography, and OpenRouter AI dynamic mood shuffler.
+ * Artwork-led visual hierarchy, clean typography, and natural AI mood strategy.
  */
 @Composable
 fun HomeScreen(
@@ -117,276 +108,197 @@ fun HomeScreen(
             .fillMaxSize()
             .background(DeepObsidianNoir)
             .testTag("home_screen"),
-        contentPadding = PaddingValues(bottom = 100.dp)
+        contentPadding = PaddingValues(bottom = 96.dp)
     ) {
-        // 1. Refined AURALIS Brand Header
+        // 1. Quiet editorial brand header
         item {
-            Box(
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 14.dp)
+                    .padding(start = 22.dp, end = 18.dp, top = 20.dp, bottom = 14.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(
-                                text = "AURALIS",
-                                style = MaterialTheme.typography.titleLarge.copy(
-                                    fontFamily = SpaceGroteskFamily,
-                                    fontWeight = FontWeight.Black,
-                                    fontSize = 24.sp,
-                                    letterSpacing = 2.sp
-                                ),
-                                color = PlatinumWhite
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Box(
-                                modifier = Modifier
-                                    .clip(RoundedCornerShape(4.dp))
-                                    .background(ImperialGold.copy(alpha = 0.15f))
-                                    .border(0.6.dp, ImperialGold, RoundedCornerShape(4.dp))
-                                    .padding(horizontal = 6.dp, vertical = 2.dp)
-                            ) {
-                                Text(
-                                    text = "HI-RES DIRECT",
-                                    style = MaterialTheme.typography.labelSmall.copy(
-                                        fontFamily = SpaceGroteskFamily,
-                                        fontWeight = FontWeight.ExtraBold,
-                                        fontSize = 8.sp,
-                                        letterSpacing = 1.sp
-                                    ),
-                                    color = ImperialGold
-                                )
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(2.dp))
-                        Text(
-                            text = "Bit-Perfect Lossless Architecture • 24-Bit / 96kHz",
-                            style = MaterialTheme.typography.bodySmall.copy(fontSize = 11.5.sp),
-                            color = MutedSlate
+                Column {
+                    Text(
+                        text = "AURALIS",
+                        fontFamily = SpaceGroteskFamily,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp,
+                        letterSpacing = 2.8.sp,
+                        color = PlatinumWhite
+                    )
+                    Spacer(modifier = Modifier.height(3.dp))
+                    Text(
+                        text = "YOUR MUSIC. YOUR MOMENT.",
+                        fontFamily = SpaceGroteskFamily,
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 9.sp,
+                        letterSpacing = 1.4.sp,
+                        color = MutedSlate
+                    )
+                }
+
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    IconButton(
+                        onClick = onOpenVoiceSearch,
+                        modifier = Modifier
+                            .size(42.dp)
+                            .clip(CircleShape)
+                            .background(Color(0xFF17191B))
+                            .border(1.dp, DarkSurfaceBorder, CircleShape)
+                            .testTag("home_voice_button")
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Mic,
+                            contentDescription = "Voice Search",
+                            tint = BrushedSilver,
+                            modifier = Modifier.size(19.dp)
                         )
                     }
 
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        // Voice Command Shortcut
-                        IconButton(
-                            onClick = onOpenVoiceSearch,
-                            modifier = Modifier
-                                .size(40.dp)
-                                .clip(CircleShape)
-                                .background(DarkSurface)
-                                .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, CircleShape)
-                                .testTag("home_voice_button")
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Mic,
-                                contentDescription = "Voice Search",
-                                tint = ImperialGold,
-                                modifier = Modifier.size(19.dp)
-                            )
-                        }
-
-                        // AI Maestro Agent Master Controller
-                        IconButton(
-                            onClick = onOpenAiMaestro,
-                            modifier = Modifier
-                                .size(40.dp)
-                                .clip(CircleShape)
-                                .background(DarkSurface)
-                                .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, CircleShape)
-                                .testTag("home_maestro_button")
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.SmartToy,
-                                contentDescription = "AI Maestro Agent",
-                                tint = ChampagneGold,
-                                modifier = Modifier.size(19.dp)
-                            )
-                        }
-
-                        // Settings Entry Point
-                        IconButton(
-                            onClick = onOpenSettings,
-                            modifier = Modifier
-                                .size(40.dp)
-                                .clip(CircleShape)
-                                .background(DarkSurface)
-                                .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, CircleShape)
-                                .testTag("home_settings_button")
-                        ) {
-                            Icon(
-                                imageVector = Icons.Default.Settings,
-                                contentDescription = "Settings",
-                                tint = BrushedSilver,
-                                modifier = Modifier.size(19.dp)
-                            )
-                        }
+                    IconButton(
+                        onClick = onOpenSettings,
+                        modifier = Modifier
+                            .size(42.dp)
+                            .clip(CircleShape)
+                            .background(Color(0xFF17191B))
+                            .border(1.dp, DarkSurfaceBorder, CircleShape)
+                            .testTag("home_settings_button")
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = "Settings",
+                            tint = BrushedSilver,
+                            modifier = Modifier.size(19.dp)
+                        )
                     }
                 }
             }
         }
 
-        // 2. Continue Listening Featured Hero Banner
+        // 2. Featured track: Large, beautiful album artwork
         if (featuredTrack != null) {
             item {
                 Card(
-                    shape = RoundedCornerShape(AuralisTokens.RadiusLarge),
-                    colors = CardDefaults.cardColors(
-                        containerColor = Color(0xFF0F1524)
-                    ),
+                    shape = RoundedCornerShape(22.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF121416)),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 20.dp, vertical = 6.dp)
-                        .border(
-                            AuralisTokens.BorderHairline,
-                            ImperialGold.copy(alpha = 0.35f),
-                            RoundedCornerShape(AuralisTokens.RadiusLarge)
-                        )
+                        .padding(horizontal = 22.dp, vertical = 4.dp)
+                        .border(1.dp, DarkSurfaceBorder, RoundedCornerShape(22.dp))
                         .clickable { onTrackClicked(featuredTrack) }
                         .testTag("featured_track_hero")
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(14.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        AuralisArtwork(
-                            model = featuredTrack.artworkUrl,
-                            contentDescription = featuredTrack.title,
-                            size = 64.dp,
-                            cornerRadius = 14.dp,
-                            showHiResBadge = true
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Text(
+                            text = "A TRACK TO START WITH",
+                            fontFamily = SpaceGroteskFamily,
+                            fontSize = 9.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            letterSpacing = 1.5.sp,
+                            color = MutedSlate
                         )
-
-                        Spacer(modifier = Modifier.width(14.dp))
-
-                        Column(modifier = Modifier.weight(1f)) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(6.dp)
-                                        .clip(CircleShape)
-                                        .background(ImperialGold)
-                                )
-                                Spacer(modifier = Modifier.width(5.dp))
-                                Text(
-                                    text = "CONTINUE LISTENING",
-                                    fontFamily = SpaceGroteskFamily,
-                                    fontSize = 9.5.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    letterSpacing = 1.2.sp,
-                                    color = ImperialGold
-                                )
-                            }
-                            Spacer(modifier = Modifier.height(2.dp))
-                            Text(
-                                text = featuredTrack.title,
-                                fontFamily = SpaceGroteskFamily,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 16.sp,
-                                color = PlatinumWhite,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                            Text(
-                                text = "${featuredTrack.artist} • ${featuredTrack.genre}",
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MutedSlate,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }
-
-                        // Play Button Knob
-                        Box(
-                            modifier = Modifier
-                                .size(44.dp)
-                                .clip(CircleShape)
-                                .background(ImperialGold),
-                            contentAlignment = Alignment.Center
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Icon(
-                                imageVector = Icons.Default.PlayArrow,
-                                contentDescription = "Play",
-                                tint = DeepObsidianNoir,
-                                modifier = Modifier.size(24.dp)
+                            AuralisArtwork(
+                                model = featuredTrack.artworkUrl,
+                                contentDescription = "Artwork for ${featuredTrack.title}",
+                                size = 84.dp,
+                                cornerRadius = 14.dp,
+                                showHiResBadge = false
                             )
+                            Spacer(modifier = Modifier.width(14.dp))
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(
+                                    text = featuredTrack.title,
+                                    fontFamily = SpaceGroteskFamily,
+                                    fontSize = 17.sp,
+                                    fontWeight = FontWeight.SemiBold,
+                                    letterSpacing = (-0.2).sp,
+                                    color = PlatinumWhite,
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    text = featuredTrack.artist,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MutedSlate,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                                Spacer(modifier = Modifier.height(10.dp))
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(32.dp)
+                                            .clip(CircleShape)
+                                            .background(ImperialGold),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.PlayArrow,
+                                            contentDescription = "Play ${featuredTrack.title}",
+                                            tint = DeepObsidianNoir,
+                                            modifier = Modifier.size(20.dp)
+                                        )
+                                    }
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(
+                                        text = "PLAY TRACK",
+                                        fontFamily = SpaceGroteskFamily,
+                                        fontSize = 10.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        letterSpacing = 0.8.sp,
+                                        color = BrushedSilver
+                                    )
+                                }
+                            }
                         }
                     }
                 }
             }
         }
 
-        // 3. OpenRouter / Gemini AI Dynamic Mood Strategy Card
+        // 3. Mood-Based Mix Generator (Quiet, intuitive, and natural)
         item {
             Card(
-                shape = RoundedCornerShape(AuralisTokens.RadiusLarge),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF0F1524)),
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFF121416)),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 8.dp)
-                    .border(
-                        AuralisTokens.BorderHairline,
-                        DarkSurfaceBorder,
-                        RoundedCornerShape(AuralisTokens.RadiusLarge)
-                    )
+                    .padding(horizontal = 22.dp, vertical = 8.dp)
+                    .border(1.dp, DarkSurfaceBorder, RoundedCornerShape(20.dp))
                     .testTag("dynamic_mood_shuffler_card")
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Box(
-                                modifier = Modifier
-                                    .size(36.dp)
-                                    .clip(CircleShape)
-                                    .background(Color(0xFF162035))
-                                    .border(AuralisTokens.BorderHairline, ImperialGold.copy(alpha = 0.5f), CircleShape),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Default.AutoAwesome,
-                                    contentDescription = null,
-                                    tint = ImperialGold,
-                                    modifier = Modifier.size(18.dp)
-                                )
-                            }
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Column {
-                                Text(
-                                    text = "DYNAMIC MOOD STRATEGY",
-                                    fontFamily = SpaceGroteskFamily,
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 13.sp,
-                                    letterSpacing = 1.sp,
-                                    color = PlatinumWhite
-                                )
-                                Text(
-                                    text = "OpenRouter / Gemini Psychoacoustic Shuffler",
-                                    style = MaterialTheme.typography.bodySmall.copy(fontSize = 11.sp),
-                                    color = MutedSlate
-                                )
-                            }
-                        }
-                    }
+                    Text(
+                        text = "MOOD-BASED MIX",
+                        fontFamily = SpaceGroteskFamily,
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Bold,
+                        letterSpacing = 1.4.sp,
+                        color = MutedSlate
+                    )
+                    Spacer(modifier = Modifier.height(3.dp))
+                    Text(
+                        text = "Describe the moment. Find your sound.",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = BrushedSilver
+                    )
 
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    // Natural Language Input Field
                     OutlinedTextField(
                         value = customDescriptorInput,
                         onValueChange = { customDescriptorInput = it },
                         placeholder = {
                             Text(
-                                text = "e.g. energetic morning workout or rainy day study...",
+                                text = "What do you want your music to feel like?",
                                 fontSize = 12.sp,
                                 color = DarkCharcoal
                             )
@@ -398,8 +310,8 @@ fun HomeScreen(
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = ImperialGold,
                             unfocusedBorderColor = DarkSurfaceBorder,
-                            focusedContainerColor = Color(0xFF090D16),
-                            unfocusedContainerColor = Color(0xFF090D16),
+                            focusedContainerColor = Color(0xFF090A0C),
+                            unfocusedContainerColor = Color(0xFF090A0C),
                             focusedTextColor = PlatinumWhite,
                             unfocusedTextColor = PlatinumWhite
                         ),
@@ -430,24 +342,24 @@ fun HomeScreen(
 
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    // Quick Prompt Inspiration Chips
+                    // Prompt Inspiration Chips
                     LazyRow(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        val quickChips = listOf(
-                            Triple("energetic morning workout", "125-142 BPM", Icons.Default.FitnessCenter),
-                            Triple("relaxed rainy day", "74-88 BPM", Icons.Default.WaterDrop),
-                            Triple("late night drive", "95-110 BPM", Icons.Default.Bolt),
-                            Triple("deep focus cafe", "60-80 BPM", Icons.Default.AutoAwesome)
+                        val prompts = listOf(
+                            "Deep focus cafe",
+                            "Late night drive",
+                            "Energetic morning workout",
+                            "Relaxed rainy day"
                         )
 
-                        items(quickChips) { (prompt, bpmRange, icon) ->
+                        items(prompts) { prompt ->
                             Box(
                                 modifier = Modifier
                                     .clip(RoundedCornerShape(8.dp))
-                                    .background(Color(0xFF141C2D))
-                                    .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, RoundedCornerShape(8.dp))
+                                    .background(Color(0xFF17191D))
+                                    .border(1.dp, DarkSurfaceBorder, RoundedCornerShape(8.dp))
                                     .clickable {
                                         customDescriptorInput = prompt
                                         onGenerateDynamicMoodPlaylist(prompt)
@@ -455,22 +367,13 @@ fun HomeScreen(
                                     .padding(horizontal = 10.dp, vertical = 6.dp)
                                     .testTag("quick_chip_${prompt.replace(" ", "_")}")
                             ) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Icon(
-                                        imageVector = icon,
-                                        contentDescription = null,
-                                        tint = ImperialGold,
-                                        modifier = Modifier.size(13.dp)
-                                    )
-                                    Spacer(modifier = Modifier.width(6.dp))
-                                    Text(
-                                        text = prompt,
-                                        fontFamily = SpaceGroteskFamily,
-                                        fontSize = 11.sp,
-                                        fontWeight = FontWeight.Medium,
-                                        color = BrushedSilver
-                                    )
-                                }
+                                Text(
+                                    text = prompt,
+                                    fontFamily = SpaceGroteskFamily,
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Normal,
+                                    color = BrushedSilver
+                                )
                             }
                         }
                     }
@@ -482,8 +385,8 @@ fun HomeScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clip(RoundedCornerShape(12.dp))
-                                .background(Color(0xFF090D16))
-                                .border(AuralisTokens.BorderHairline, ImperialGold.copy(alpha = 0.6f), RoundedCornerShape(12.dp))
+                                .background(Color(0xFF090A0C))
+                                .border(1.dp, ImperialGold.copy(alpha = 0.5f), RoundedCornerShape(12.dp))
                                 .padding(12.dp)
                                 .testTag("dynamic_mood_result_banner")
                         ) {
@@ -496,8 +399,8 @@ fun HomeScreen(
                                     Text(
                                         text = activeDynamicMoodReport.title,
                                         fontFamily = SpaceGroteskFamily,
-                                        fontSize = 13.5.sp,
-                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 13.sp,
+                                        fontWeight = FontWeight.SemiBold,
                                         color = ImperialGold
                                     )
                                     Text(
@@ -545,18 +448,18 @@ fun HomeScreen(
             }
         }
 
-        // 4. Target Mood State Filter Chips
+        // 4. Mood Filter Chips
         item {
-            Column(modifier = Modifier.padding(top = 10.dp, bottom = 6.dp)) {
+            Column(modifier = Modifier.padding(top = 10.dp, bottom = 4.dp)) {
                 AuralisSectionHeader(
-                    overline = "RESONANCE",
-                    title = "Target Mood State"
+                    overline = "MOOD SELECTION",
+                    title = "Target Listening Mood"
                 )
 
                 LazyRow(
-                    contentPadding = PaddingValues(horizontal = 20.dp),
+                    contentPadding = PaddingValues(horizontal = 22.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier.padding(top = 6.dp)
                 ) {
                     items(moods) { mood ->
                         val isSelected = selectedMood.equals(mood, ignoreCase = true)
@@ -574,7 +477,7 @@ fun HomeScreen(
             }
         }
 
-        // 5. Curated Mood Playlists
+        // 5. Curated Playlists
         item {
             Column(modifier = Modifier.padding(top = 14.dp)) {
                 AuralisSectionHeader(
@@ -585,19 +488,17 @@ fun HomeScreen(
                 )
 
                 LazyRow(
-                    contentPadding = PaddingValues(horizontal = 20.dp),
-                    horizontalArrangement = Arrangement.spacedBy(14.dp),
-                    modifier = Modifier.padding(top = 10.dp)
+                    contentPadding = PaddingValues(horizontal = 22.dp),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    modifier = Modifier.padding(top = 8.dp)
                 ) {
                     items(playlists) { playlist ->
                         Card(
                             shape = RoundedCornerShape(AuralisTokens.RadiusMedium),
-                            colors = CardDefaults.cardColors(
-                                containerColor = Color(0xFF0F1524)
-                            ),
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFF121416)),
                             modifier = Modifier
-                                .width(160.dp)
-                                .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, RoundedCornerShape(AuralisTokens.RadiusMedium))
+                                .width(150.dp)
+                                .border(1.dp, DarkSurfaceBorder, RoundedCornerShape(AuralisTokens.RadiusMedium))
                                 .clickable { onPlaylistClicked(playlist) }
                                 .testTag("playlist_card_${playlist.id}")
                         ) {
@@ -615,7 +516,7 @@ fun HomeScreen(
                                         text = playlist.title,
                                         fontFamily = SpaceGroteskFamily,
                                         fontSize = 13.sp,
-                                        fontWeight = FontWeight.Bold,
+                                        fontWeight = FontWeight.SemiBold,
                                         maxLines = 1,
                                         overflow = TextOverflow.Ellipsis,
                                         color = PlatinumWhite
@@ -636,12 +537,12 @@ fun HomeScreen(
             }
         }
 
-        // 6. Curated Track Selections
+        // 6. Recommended Tracks
         item {
             AuralisSectionHeader(
-                overline = "AUDIO ARCHIVE",
-                title = "Recommended Master Tracks",
-                actionText = "${tracks.size} Tracks",
+                overline = "RECOMMENDED",
+                title = "Tracks for You",
+                actionText = "${tracks.size} tracks",
                 modifier = Modifier.padding(top = 16.dp, bottom = 4.dp)
             )
         }
@@ -657,15 +558,15 @@ fun HomeScreen(
             )
         }
 
-        // 7. Listening Telemetry Summary Glance
+        // 7. Quiet Telemetry
         item {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 18.dp)
+                    .padding(horizontal = 22.dp, vertical = 16.dp)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(Color(0xFF0D121E))
-                    .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, RoundedCornerShape(12.dp))
+                    .background(Color(0xFF111214))
+                    .border(1.dp, DarkSurfaceBorder, RoundedCornerShape(12.dp))
                     .padding(14.dp)
             ) {
                 Row(
@@ -675,35 +576,28 @@ fun HomeScreen(
                 ) {
                     Column {
                         Text(
-                            text = "ACOUSTIC TELEMETRY",
+                            text = "LISTENING TELEMETRY",
                             fontFamily = SpaceGroteskFamily,
                             fontSize = 9.sp,
-                            fontWeight = FontWeight.Bold,
+                            fontWeight = FontWeight.SemiBold,
                             letterSpacing = 1.2.sp,
-                            color = ImperialGold
+                            color = MutedSlate
                         )
                         Spacer(modifier = Modifier.height(2.dp))
                         Text(
                             text = "${analytics.totalMinutesListened} mins listened • ${analytics.listeningStreakDays}-day streak",
-                            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
+                            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
                             color = PlatinumWhite
                         )
                     }
 
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(6.dp))
-                            .background(Color(0xFF161E2E))
-                            .padding(horizontal = 8.dp, vertical = 4.dp)
-                    ) {
-                        Text(
-                            text = analytics.topMood.uppercase(),
-                            fontFamily = SpaceGroteskFamily,
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = ChampagneGold
-                        )
-                    }
+                    Text(
+                        text = analytics.topMood.uppercase(),
+                        fontFamily = SpaceGroteskFamily,
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = ImperialGold
+                    )
                 }
             }
         }

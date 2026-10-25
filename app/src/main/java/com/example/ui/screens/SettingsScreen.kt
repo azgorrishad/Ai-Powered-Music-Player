@@ -122,28 +122,22 @@ fun SettingsScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 20.dp),
+                    .padding(bottom = 18.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Box(
                     modifier = Modifier
-                        .size(48.dp)
+                        .size(44.dp)
                         .clip(CircleShape)
-                        .background(
-                            Brush.linearGradient(
-                                listOf(
-                                    MaterialTheme.colorScheme.primary,
-                                    MaterialTheme.colorScheme.secondary
-                                )
-                            )
-                        ),
+                        .background(Color(0xFF17191C))
+                        .border(1.dp, com.example.ui.theme.DarkSurfaceBorder, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.Settings,
                         contentDescription = "Settings",
-                        tint = Color.White,
-                        modifier = Modifier.size(24.dp)
+                        tint = com.example.ui.theme.BrushedSilver,
+                        modifier = Modifier.size(22.dp)
                     )
                 }
 
@@ -151,15 +145,17 @@ fun SettingsScreen(
 
                 Column {
                     Text(
-                        text = "AURALIS Studio Preferences",
-                        style = MaterialTheme.typography.headlineSmall,
+                        text = "Settings & Sound Controls",
+                        fontFamily = com.example.ui.theme.SpaceGroteskFamily,
                         fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onBackground
+                        fontSize = 20.sp,
+                        color = com.example.ui.theme.PlatinumWhite
                     )
+                    Spacer(modifier = Modifier.height(2.dp))
                     Text(
-                        text = "Engine Settings • Audio DSP • AI Agent • Themes",
+                        text = "Audio DSP • AI Orchestration • Theme & Storage",
                         style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = com.example.ui.theme.MutedSlate
                     )
                 }
             }
@@ -917,20 +913,22 @@ private fun ColorSwatchCircle(color: Color, label: String, border: Boolean = fal
 private fun SettingsCategoryHeader(title: String, icon: ImageVector) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
     ) {
         Icon(
             imageVector = icon,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(18.dp)
+            tint = com.example.ui.theme.BrushedSilver,
+            modifier = Modifier.size(17.dp)
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(
-            text = title,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.primary
+            text = title.uppercase(),
+            fontFamily = com.example.ui.theme.SpaceGroteskFamily,
+            fontSize = 10.sp,
+            fontWeight = FontWeight.SemiBold,
+            letterSpacing = 1.4.sp,
+            color = com.example.ui.theme.MutedSlate
         )
     }
 }

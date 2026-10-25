@@ -22,10 +22,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AutoAwesome
-import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Storage
-import androidx.compose.material.icons.filled.Sync
 import androidx.compose.material.icons.filled.YoutubeSearchedFor
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -62,7 +60,6 @@ import com.example.ui.theme.DarkSurfaceBorder
 import com.example.ui.theme.DeepObsidianNoir
 import com.example.ui.theme.ImperialGold
 import com.example.ui.theme.MutedSlate
-import com.example.ui.theme.NeonPink
 import com.example.ui.theme.PlatinumWhite
 import com.example.ui.theme.SpaceGroteskFamily
 
@@ -76,7 +73,7 @@ enum class LibraryTab {
 }
 
 /**
- * Clean, organized personal music library and sound vault for AURALIS.
+ * Clean, organized personal music library for AURALIS.
  */
 @Composable
 fun LibraryScreen(
@@ -118,14 +115,14 @@ fun LibraryScreen(
             .fillMaxSize()
             .background(DeepObsidianNoir)
             .testTag("library_screen"),
-        contentPadding = PaddingValues(bottom = 100.dp)
+        contentPadding = PaddingValues(bottom = 96.dp)
     ) {
-        // Studio Header & Search Bar
+        // Header & Search
         item {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 14.dp)
+                    .padding(horizontal = 22.dp, vertical = 14.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -133,31 +130,21 @@ fun LibraryScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(6.dp)
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .size(5.dp)
-                                    .clip(CircleShape)
-                                    .background(ImperialGold)
-                            )
-                            Text(
-                                text = "AUDIO ARCHIVE",
-                                fontFamily = SpaceGroteskFamily,
-                                fontSize = 10.sp,
-                                fontWeight = FontWeight.Bold,
-                                letterSpacing = 2.sp,
-                                color = ImperialGold
-                            )
-                        }
-                        Spacer(modifier = Modifier.height(2.dp))
                         Text(
-                            text = "Sound Vault",
+                            text = "LIBRARY ARCHIVE",
+                            fontFamily = SpaceGroteskFamily,
+                            fontSize = 9.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            letterSpacing = 1.6.sp,
+                            color = MutedSlate
+                        )
+                        Spacer(modifier = Modifier.height(3.dp))
+                        Text(
+                            text = "Music Vault",
                             style = MaterialTheme.typography.titleLarge.copy(
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 22.sp
+                                fontSize = 22.sp,
+                                letterSpacing = (-0.25).sp
                             ),
                             color = PlatinumWhite
                         )
@@ -169,14 +156,14 @@ fun LibraryScreen(
                             modifier = Modifier
                                 .size(40.dp)
                                 .clip(CircleShape)
-                                .background(DarkSurface)
-                                .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, CircleShape)
+                                .background(Color(0xFF16181B))
+                                .border(1.dp, DarkSurfaceBorder, CircleShape)
                                 .testTag("library_youtube_import_button")
                         ) {
                             Icon(
                                 imageVector = Icons.Default.YoutubeSearchedFor,
-                                contentDescription = "Import YouTube Stream",
-                                tint = NeonPink,
+                                contentDescription = "Import Stream",
+                                tint = BrushedSilver,
                                 modifier = Modifier.size(18.dp)
                             )
                         }
@@ -186,13 +173,13 @@ fun LibraryScreen(
                             modifier = Modifier
                                 .size(40.dp)
                                 .clip(CircleShape)
-                                .background(DarkSurface)
-                                .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, CircleShape)
+                                .background(Color(0xFF16181B))
+                                .border(1.dp, DarkSurfaceBorder, CircleShape)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.AutoAwesome,
-                                contentDescription = "AI Playlist Studio",
-                                tint = ImperialGold,
+                                contentDescription = "Playlist Studio",
+                                tint = BrushedSilver,
                                 modifier = Modifier.size(18.dp)
                             )
                         }
@@ -202,8 +189,8 @@ fun LibraryScreen(
                             modifier = Modifier
                                 .size(40.dp)
                                 .clip(CircleShape)
-                                .background(DarkSurface)
-                                .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, CircleShape)
+                                .background(Color(0xFF16181B))
+                                .border(1.dp, DarkSurfaceBorder, CircleShape)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Storage,
@@ -221,7 +208,7 @@ fun LibraryScreen(
                 AuralisSearchBar(
                     query = searchQuery,
                     onQueryChange = onSearchQueryChange,
-                    placeholder = "Search titles, artists, albums...",
+                    placeholder = "Search songs, artists, albums...",
                     onOpenVoice = onOpenVoiceSearch,
                     modifier = Modifier.testTag("universal_search_bar")
                 )
@@ -231,7 +218,7 @@ fun LibraryScreen(
         // Category Filter Pills
         item {
             LazyRow(
-                contentPadding = PaddingValues(horizontal = 20.dp),
+                contentPadding = PaddingValues(horizontal = 22.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.padding(bottom = 12.dp)
             ) {
@@ -262,10 +249,10 @@ fun LibraryScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 20.dp, vertical = 6.dp)
+                        .padding(horizontal = 22.dp, vertical = 4.dp)
                         .clip(RoundedCornerShape(AuralisTokens.RadiusMedium))
-                        .background(Color(0xFF0F1524))
-                        .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, RoundedCornerShape(AuralisTokens.RadiusMedium))
+                        .background(Color(0xFF121416))
+                        .border(1.dp, DarkSurfaceBorder, RoundedCornerShape(AuralisTokens.RadiusMedium))
                         .padding(14.dp)
                 ) {
                     Row(
@@ -274,33 +261,22 @@ fun LibraryScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Column(modifier = Modifier.weight(1f)) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(6.dp)
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(5.dp)
-                                        .clip(CircleShape)
-                                        .background(ImperialGold)
-                                )
-                                Text(
-                                    text = "DEVICE STORAGE",
-                                    fontFamily = SpaceGroteskFamily,
-                                    fontSize = 9.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    letterSpacing = 1.2.sp,
-                                    color = ImperialGold
-                                )
-                            }
+                            Text(
+                                text = "DEVICE STORAGE",
+                                fontFamily = SpaceGroteskFamily,
+                                fontSize = 9.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                letterSpacing = 1.2.sp,
+                                color = MutedSlate
+                            )
                             Spacer(modifier = Modifier.height(2.dp))
                             Text(
                                 text = "Scan Device Audio Storage",
-                                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
                                 color = PlatinumWhite
                             )
                             Text(
-                                text = "Index lossless FLAC, WAV, ALAC & MP3 files",
+                                text = "Index local audio files into your personal vault",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MutedSlate
                             )
@@ -340,7 +316,7 @@ fun LibraryScreen(
                 item {
                     AuralisEmptyState(
                         title = "No Playlists Found",
-                        description = "Create tailored mood playlists or use AI Playlist Studio to generate bespoke soundscapes.",
+                        description = "Create custom playlists or use AI Playlist Studio to generate curated collections.",
                         actionText = "Open Playlist Studio",
                         onAction = onOpenPlaylistGenerator
                     )
@@ -350,10 +326,10 @@ fun LibraryScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 20.dp, vertical = 5.dp)
+                            .padding(horizontal = 22.dp, vertical = 4.dp)
                             .clip(RoundedCornerShape(AuralisTokens.RadiusMedium))
-                            .background(Color(0xFF0C111C))
-                            .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, RoundedCornerShape(AuralisTokens.RadiusMedium))
+                            .background(Color(0xFF111214))
+                            .border(1.dp, DarkSurfaceBorder, RoundedCornerShape(AuralisTokens.RadiusMedium))
                             .clickable { onPlaylistClicked(playlist) }
                             .padding(12.dp)
                             .testTag("playlist_row_${playlist.id}")
@@ -361,9 +337,9 @@ fun LibraryScreen(
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Box(
                                 modifier = Modifier
-                                    .size(56.dp)
+                                    .size(54.dp)
                                     .clip(RoundedCornerShape(10.dp))
-                                    .border(AuralisTokens.BorderHairline, ImperialGold.copy(alpha = 0.4f), RoundedCornerShape(10.dp))
+                                    .border(1.dp, DarkSurfaceBorder, RoundedCornerShape(10.dp))
                             ) {
                                 AsyncImage(
                                     model = playlist.coverUrl,
@@ -377,7 +353,7 @@ fun LibraryScreen(
                                 Text(
                                     text = playlist.title,
                                     fontFamily = SpaceGroteskFamily,
-                                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
                                     color = PlatinumWhite
                                 )
                                 Spacer(modifier = Modifier.height(2.dp))
@@ -399,7 +375,7 @@ fun LibraryScreen(
                 item {
                     AuralisEmptyState(
                         title = if (searchQuery.isNotEmpty()) "No Matching Tracks" else "No Tracks in Category",
-                        description = if (searchQuery.isNotEmpty()) "Try adjusting your search query or clear the filter." else "Scan local files or import online streams into your audio vault."
+                        description = if (searchQuery.isNotEmpty()) "Try adjusting your search terms or clearing the filter." else "Scan device storage or import online streams into your library."
                     )
                 }
             } else {

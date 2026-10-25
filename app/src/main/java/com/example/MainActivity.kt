@@ -207,13 +207,13 @@ fun PulseFlowApp(viewModel: MusicPlayerViewModel) {
                     )
                 }
 
-                // Luxury Audiophile Navigation Bar
+                // Four clear primary destinations. Secondary tools live inside Settings.
                 NavigationBar(
-                    containerColor = Color(0xF7070A12),
-                    tonalElevation = 8.dp,
+                    containerColor = Color(0xFF090A0C),
+                    tonalElevation = 0.dp,
                     modifier = Modifier
                         .border(
-                            width = 0.8.dp,
+                            width = 1.dp,
                             color = com.example.ui.theme.DarkSurfaceBorder,
                             shape = androidx.compose.ui.graphics.RectangleShape
                         )
@@ -222,16 +222,16 @@ fun PulseFlowApp(viewModel: MusicPlayerViewModel) {
                     val navColors = NavigationBarItemDefaults.colors(
                         selectedIconColor = com.example.ui.theme.ImperialGold,
                         selectedTextColor = com.example.ui.theme.PlatinumWhite,
-                        unselectedIconColor = com.example.ui.theme.DarkCharcoal,
-                        unselectedTextColor = com.example.ui.theme.DarkCharcoal,
-                        indicatorColor = com.example.ui.theme.ImperialGold.copy(alpha = 0.16f)
+                        unselectedIconColor = com.example.ui.theme.MutedSlate,
+                        unselectedTextColor = com.example.ui.theme.MutedSlate,
+                        indicatorColor = Color.Transparent
                     )
 
                     NavigationBarItem(
                         selected = currentScreen == ScreenDestination.HOME,
                         onClick = { viewModel.navigateTo(ScreenDestination.HOME) },
                         icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-                        label = { Text("Home", fontWeight = if (currentScreen == ScreenDestination.HOME) FontWeight.Bold else FontWeight.Medium, fontFamily = com.example.ui.theme.SpaceGroteskFamily, fontSize = 10.sp) },
+                        label = { Text("Home", fontWeight = if (currentScreen == ScreenDestination.HOME) FontWeight.SemiBold else FontWeight.Normal, fontFamily = com.example.ui.theme.SpaceGroteskFamily, fontSize = 10.sp) },
                         colors = navColors,
                         modifier = Modifier.testTag("nav_home")
                     )
@@ -240,43 +240,25 @@ fun PulseFlowApp(viewModel: MusicPlayerViewModel) {
                         selected = currentScreen == ScreenDestination.LIBRARY,
                         onClick = { viewModel.navigateTo(ScreenDestination.LIBRARY) },
                         icon = { Icon(Icons.Default.LibraryMusic, contentDescription = "Library") },
-                        label = { Text("Library", fontWeight = if (currentScreen == ScreenDestination.LIBRARY) FontWeight.Bold else FontWeight.Medium, fontFamily = com.example.ui.theme.SpaceGroteskFamily, fontSize = 10.sp) },
+                        label = { Text("Library", fontWeight = if (currentScreen == ScreenDestination.LIBRARY) FontWeight.SemiBold else FontWeight.Normal, fontFamily = com.example.ui.theme.SpaceGroteskFamily, fontSize = 10.sp) },
                         colors = navColors,
                         modifier = Modifier.testTag("nav_library")
-                    )
-
-                    NavigationBarItem(
-                        selected = currentScreen == ScreenDestination.EQUALIZER,
-                        onClick = { viewModel.navigateTo(ScreenDestination.EQUALIZER) },
-                        icon = { Icon(Icons.Default.Equalizer, contentDescription = "Equalizer") },
-                        label = { Text("EQ Lab", fontWeight = if (currentScreen == ScreenDestination.EQUALIZER) FontWeight.Bold else FontWeight.Medium, fontFamily = com.example.ui.theme.SpaceGroteskFamily, fontSize = 10.sp) },
-                        colors = navColors,
-                        modifier = Modifier.testTag("nav_equalizer")
-                    )
-
-                    NavigationBarItem(
-                        selected = currentScreen == ScreenDestination.ANALYTICS,
-                        onClick = { viewModel.navigateTo(ScreenDestination.ANALYTICS) },
-                        icon = { Icon(Icons.Default.Insights, contentDescription = "Insights") },
-                        label = { Text("Insights", fontWeight = if (currentScreen == ScreenDestination.ANALYTICS) FontWeight.Bold else FontWeight.Medium, fontFamily = com.example.ui.theme.SpaceGroteskFamily, fontSize = 10.sp) },
-                        colors = navColors,
-                        modifier = Modifier.testTag("nav_analytics")
                     )
 
                     NavigationBarItem(
                         selected = currentScreen == ScreenDestination.AI_MAESTRO,
                         onClick = { viewModel.navigateTo(ScreenDestination.AI_MAESTRO) },
                         icon = { Icon(Icons.Default.SmartToy, contentDescription = "AI Maestro") },
-                        label = { Text("Maestro", fontWeight = if (currentScreen == ScreenDestination.AI_MAESTRO) FontWeight.Bold else FontWeight.Medium, fontFamily = com.example.ui.theme.SpaceGroteskFamily, fontSize = 10.sp) },
+                        label = { Text("Maestro", fontWeight = if (currentScreen == ScreenDestination.AI_MAESTRO) FontWeight.SemiBold else FontWeight.Normal, fontFamily = com.example.ui.theme.SpaceGroteskFamily, fontSize = 10.sp) },
                         colors = navColors,
                         modifier = Modifier.testTag("nav_ai_maestro")
                     )
 
                     NavigationBarItem(
-                        selected = currentScreen == ScreenDestination.SETTINGS,
+                        selected = currentScreen == ScreenDestination.SETTINGS || currentScreen == ScreenDestination.EQUALIZER || currentScreen == ScreenDestination.ANALYTICS,
                         onClick = { viewModel.navigateTo(ScreenDestination.SETTINGS) },
-                        icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
-                        label = { Text("Settings", fontWeight = if (currentScreen == ScreenDestination.SETTINGS) FontWeight.Bold else FontWeight.Medium, fontFamily = com.example.ui.theme.SpaceGroteskFamily, fontSize = 10.sp) },
+                        icon = { Icon(Icons.Default.Settings, contentDescription = "Settings and tools") },
+                        label = { Text("Settings", fontWeight = if (currentScreen == ScreenDestination.SETTINGS) FontWeight.SemiBold else FontWeight.Normal, fontFamily = com.example.ui.theme.SpaceGroteskFamily, fontSize = 10.sp) },
                         colors = navColors,
                         modifier = Modifier.testTag("nav_settings")
                     )

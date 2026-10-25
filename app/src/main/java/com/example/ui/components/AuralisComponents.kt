@@ -31,7 +31,6 @@ import androidx.compose.material.icons.filled.CloudDownload
 import androidx.compose.material.icons.filled.DownloadDone
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material.icons.filled.Search
@@ -43,7 +42,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -52,7 +50,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
@@ -70,7 +67,6 @@ import com.example.ui.theme.DarkCharcoal
 import com.example.ui.theme.DarkSurface
 import com.example.ui.theme.DarkSurfaceBorder
 import com.example.ui.theme.DeepObsidianNoir
-import com.example.ui.theme.ElectricCyan
 import com.example.ui.theme.ImperialGold
 import com.example.ui.theme.MutedSlate
 import com.example.ui.theme.NeonPink
@@ -78,41 +74,33 @@ import com.example.ui.theme.PlatinumWhite
 import com.example.ui.theme.SpaceGroteskFamily
 
 /**
- * AURALIS Luxury Design System Tokens & Unified Components
+ * AURALIS Luxury Design System Tokens & Components.
+ * Built on editorial restraint, quiet graphite layering, and warm champagne accents.
  */
 object AuralisTokens {
     val RadiusSmall = 8.dp
-    val RadiusMedium = 14.dp
-    val RadiusLarge = 20.dp
+    val RadiusMedium = 16.dp
+    val RadiusLarge = 22.dp
     val RadiusPill = 24.dp
 
-    val BorderHairline = 0.8.dp
+    val BorderHairline = 1.dp
     val BorderSubtle = 1.dp
-    val BorderHighlight = 1.5.dp
-
-    val GoldGradient = Brush.horizontalGradient(
-        listOf(ImperialGold, ChampagneGold)
-    )
-
-    val SilverGradient = Brush.horizontalGradient(
-        listOf(PlatinumWhite, BrushedSilver)
-    )
-
-    val SurfaceGradient = Brush.linearGradient(
-        listOf(Color(0xFF111726), Color(0xFF0A0F1A))
-    )
 
     val SubtleBorderBrush = Brush.horizontalGradient(
         listOf(
             DarkSurfaceBorder,
-            ImperialGold.copy(alpha = 0.35f),
+            Color(0xFF34363A),
             DarkSurfaceBorder
         )
+    )
+
+    val SurfaceGradient = Brush.linearGradient(
+        listOf(Color(0xFF16181B), Color(0xFF101113))
     )
 }
 
 /**
- * Editorial Section Header with precision category overline and title.
+ * Editorial Section Header with quiet typography and clean alignment.
  */
 @Composable
 fun AuralisSectionHeader(
@@ -125,64 +113,49 @@ fun AuralisSectionHeader(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 6.dp),
+            .padding(horizontal = 22.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Column {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(6.dp)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(5.dp)
-                        .clip(CircleShape)
-                        .background(ImperialGold)
-                )
-                Text(
-                    text = overline.uppercase(),
-                    fontFamily = SpaceGroteskFamily,
-                    fontSize = 10.sp,
-                    fontWeight = FontWeight.Bold,
-                    letterSpacing = 2.sp,
-                    color = ImperialGold
-                )
-            }
-            Spacer(modifier = Modifier.height(2.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = overline.uppercase(),
+                fontFamily = SpaceGroteskFamily,
+                fontSize = 9.sp,
+                fontWeight = FontWeight.SemiBold,
+                letterSpacing = 1.6.sp,
+                color = MutedSlate
+            )
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleLarge.copy(
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 20.sp,
+                    letterSpacing = (-0.25).sp
                 ),
                 color = PlatinumWhite
             )
         }
 
         if (actionText != null && onAction != null) {
-            Box(
+            Text(
+                text = actionText,
+                fontFamily = SpaceGroteskFamily,
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Medium,
+                color = BrushedSilver,
                 modifier = Modifier
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(Color(0xFF131929))
-                    .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, RoundedCornerShape(8.dp))
+                    .clip(RoundedCornerShape(6.dp))
                     .clickable { onAction() }
-                    .padding(horizontal = 10.dp, vertical = 5.dp)
-            ) {
-                Text(
-                    text = actionText,
-                    fontFamily = SpaceGroteskFamily,
-                    fontSize = 11.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = BrushedSilver
-                )
-            }
+                    .padding(start = 8.dp, top = 8.dp, end = 2.dp, bottom = 8.dp)
+            )
         }
     }
 }
 
 /**
- * Tactile Album / Track Artwork with subtle chamfer border and fallback icon.
+ * Tactile Album / Track Artwork with understated corner radius and placeholder.
  */
 @Composable
 fun AuralisArtwork(
@@ -198,10 +171,10 @@ fun AuralisArtwork(
         modifier = modifier
             .size(size)
             .clip(RoundedCornerShape(cornerRadius))
-            .background(Color(0xFF0B101C))
+            .background(Color(0xFF141618))
             .border(
-                width = if (isPlaying) 1.2.dp else AuralisTokens.BorderHairline,
-                color = if (isPlaying) ImperialGold else DarkSurfaceBorder,
+                width = 1.dp,
+                color = if (isPlaying) ImperialGold.copy(alpha = 0.8f) else DarkSurfaceBorder,
                 shape = RoundedCornerShape(cornerRadius)
             ),
         contentAlignment = Alignment.Center
@@ -217,7 +190,7 @@ fun AuralisArtwork(
             Icon(
                 imageVector = Icons.Default.MusicNote,
                 contentDescription = null,
-                tint = ImperialGold.copy(alpha = 0.7f),
+                tint = DarkCharcoal,
                 modifier = Modifier.size(size * 0.45f)
             )
         }
@@ -232,31 +205,11 @@ fun AuralisArtwork(
                 AuralisMiniWaveform(isPlaying = true, color = ImperialGold)
             }
         }
-
-        if (showHiResBadge) {
-            Box(
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(3.dp)
-                    .clip(RoundedCornerShape(3.dp))
-                    .background(Color.Black.copy(alpha = 0.85f))
-                    .border(0.5.dp, ImperialGold, RoundedCornerShape(3.dp))
-                    .padding(horizontal = 3.dp, vertical = 1.dp)
-            ) {
-                Text(
-                    text = "HI-RES",
-                    fontSize = 6.5.sp,
-                    fontWeight = FontWeight.Black,
-                    fontFamily = SpaceGroteskFamily,
-                    color = ImperialGold
-                )
-            }
-        }
     }
 }
 
 /**
- * Animated 4-bar Equalizer indicator for active playback.
+ * Minimalist 4-bar Equalizer indicator for active playback.
  */
 @Composable
 fun AuralisMiniWaveform(
@@ -302,7 +255,7 @@ fun AuralisMiniWaveform(
 }
 
 /**
- * Reusable Track Row component conforming to AURALIS luxury standards.
+ * Reusable Track Row component with clean typography, generous touch targets, and subtle feedback.
  */
 @Composable
 fun AuralisTrackRow(
@@ -314,16 +267,16 @@ fun AuralisTrackRow(
     onToggleFavorite: (() -> Unit)? = null,
     onDownload: (() -> Unit)? = null
 ) {
-    val activeBorder = if (isCurrent) ImperialGold.copy(alpha = 0.8f) else DarkSurfaceBorder
-    val activeBackground = if (isCurrent) Color(0xFF141C2C) else Color(0xFF0C111C)
+    val activeBorder = if (isCurrent) ImperialGold.copy(alpha = 0.6f) else DarkSurfaceBorder
+    val activeBackground = if (isCurrent) Color(0xFF181A1D) else Color(0xFF111214)
 
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 4.dp)
+            .padding(horizontal = 20.dp, vertical = 3.dp)
             .clip(RoundedCornerShape(AuralisTokens.RadiusMedium))
             .background(activeBackground)
-            .border(AuralisTokens.BorderHairline, activeBorder, RoundedCornerShape(AuralisTokens.RadiusMedium))
+            .border(1.dp, activeBorder, RoundedCornerShape(AuralisTokens.RadiusMedium))
             .clickable { onClick() }
             .padding(horizontal = 12.dp, vertical = 9.dp)
             .testTag("track_row_${track.id}")
@@ -335,9 +288,10 @@ fun AuralisTrackRow(
             AuralisArtwork(
                 model = track.artworkUrl,
                 contentDescription = track.title,
-                size = 48.dp,
+                size = 46.dp,
+                cornerRadius = 10.dp,
                 isPlaying = isCurrent && isPlaying,
-                showHiResBadge = true
+                showHiResBadge = false
             )
 
             Spacer(modifier = Modifier.width(12.dp))
@@ -346,8 +300,8 @@ fun AuralisTrackRow(
                 Text(
                     text = track.title,
                     fontFamily = SpaceGroteskFamily,
-                    fontSize = 14.sp,
-                    fontWeight = if (isCurrent) FontWeight.Bold else FontWeight.SemiBold,
+                    fontSize = 13.5.sp,
+                    fontWeight = if (isCurrent) FontWeight.SemiBold else FontWeight.Medium,
                     color = if (isCurrent) ImperialGold else PlatinumWhite,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -359,41 +313,42 @@ fun AuralisTrackRow(
                 ) {
                     Text(
                         text = track.artist,
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.bodySmall.copy(fontSize = 11.5.sp),
                         color = MutedSlate,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.weight(1f, fill = false)
                     )
 
-                    Box(
-                        modifier = Modifier
-                            .size(3.dp)
-                            .clip(CircleShape)
-                            .background(DarkCharcoal)
-                    )
-
-                    Text(
-                        text = "${track.bpm} BPM",
-                        fontFamily = SpaceGroteskFamily,
-                        fontSize = 9.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = ChampagneGold.copy(alpha = 0.85f)
-                    )
+                    if (track.genre.isNotBlank()) {
+                        Box(
+                            modifier = Modifier
+                                .size(3.dp)
+                                .clip(CircleShape)
+                                .background(DarkCharcoal)
+                        )
+                        Text(
+                            text = track.genre,
+                            style = MaterialTheme.typography.bodySmall.copy(fontSize = 10.5.sp),
+                            color = DarkCharcoal,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.width(6.dp))
+            Spacer(modifier = Modifier.width(4.dp))
 
             if (onDownload != null) {
                 IconButton(
                     onClick = onDownload,
-                    modifier = Modifier.size(38.dp)
+                    modifier = Modifier.size(40.dp)
                 ) {
                     Icon(
                         imageVector = if (track.isDownloaded) Icons.Default.DownloadDone else Icons.Default.CloudDownload,
                         contentDescription = if (track.isDownloaded) "Downloaded" else "Download",
-                        tint = if (track.isDownloaded) ElectricCyan else MutedSlate,
+                        tint = if (track.isDownloaded) ImperialGold else MutedSlate,
                         modifier = Modifier.size(18.dp)
                     )
                 }
@@ -402,7 +357,7 @@ fun AuralisTrackRow(
             if (onToggleFavorite != null) {
                 IconButton(
                     onClick = onToggleFavorite,
-                    modifier = Modifier.size(38.dp)
+                    modifier = Modifier.size(40.dp)
                 ) {
                     Icon(
                         imageVector = if (track.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
@@ -417,7 +372,7 @@ fun AuralisTrackRow(
 }
 
 /**
- * Universal Luxury Search Bar with tactile graphite styling and clear/voice actions.
+ * Universal Luxury Search Bar with graphite styling.
  */
 @Composable
 fun AuralisSearchBar(
@@ -441,8 +396,8 @@ fun AuralisSearchBar(
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = "Search",
-                tint = ImperialGold,
-                modifier = Modifier.size(20.dp)
+                tint = BrushedSilver,
+                modifier = Modifier.size(19.dp)
             )
         },
         trailingIcon = {
@@ -462,8 +417,8 @@ fun AuralisSearchBar(
                         Icon(
                             imageVector = Icons.Default.Mic,
                             contentDescription = "Voice search",
-                            tint = ImperialGold,
-                            modifier = Modifier.size(20.dp)
+                            tint = BrushedSilver,
+                            modifier = Modifier.size(19.dp)
                         )
                     }
                 }
@@ -473,8 +428,8 @@ fun AuralisSearchBar(
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = ImperialGold,
             unfocusedBorderColor = DarkSurfaceBorder,
-            focusedContainerColor = DarkSurface,
-            unfocusedContainerColor = Color(0xFF0C101A),
+            focusedContainerColor = Color(0xFF141619),
+            unfocusedContainerColor = Color(0xFF111214),
             focusedTextColor = PlatinumWhite,
             unfocusedTextColor = PlatinumWhite
         ),
@@ -484,7 +439,7 @@ fun AuralisSearchBar(
 }
 
 /**
- * Luxury Category Filter Pill.
+ * Restrained Category Filter Pill.
  */
 @Composable
 fun AuralisFilterPill(
@@ -494,15 +449,15 @@ fun AuralisFilterPill(
     modifier: Modifier = Modifier,
     count: Int? = null
 ) {
-    val bg = if (isSelected) Color(0xFF1C2538) else Color(0xFF0C111C)
-    val border = if (isSelected) ImperialGold else DarkSurfaceBorder
-    val textCol = if (isSelected) ImperialGold else MutedSlate
+    val bg = if (isSelected) Color(0xFF1E2125) else Color(0xFF111214)
+    val border = if (isSelected) ImperialGold.copy(alpha = 0.7f) else DarkSurfaceBorder
+    val textCol = if (isSelected) PlatinumWhite else MutedSlate
 
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(AuralisTokens.RadiusSmall))
             .background(bg)
-            .border(AuralisTokens.BorderHairline, border, RoundedCornerShape(AuralisTokens.RadiusSmall))
+            .border(1.dp, border, RoundedCornerShape(AuralisTokens.RadiusSmall))
             .clickable { onClick() }
             .padding(horizontal = 12.dp, vertical = 7.dp)
     ) {
@@ -511,7 +466,7 @@ fun AuralisFilterPill(
                 text = label,
                 fontFamily = SpaceGroteskFamily,
                 fontSize = 11.5.sp,
-                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
                 color = textCol
             )
             if (count != null) {
@@ -519,7 +474,7 @@ fun AuralisFilterPill(
                 Text(
                     text = "($count)",
                     fontSize = 10.sp,
-                    color = textCol.copy(alpha = 0.7f)
+                    color = textCol.copy(alpha = 0.6f)
                 )
             }
         }
@@ -527,7 +482,7 @@ fun AuralisFilterPill(
 }
 
 /**
- * Surface Card with subtle graphite gradient and hairline border.
+ * Surface Card with graphite background and hairline border.
  */
 @Composable
 fun AuralisSurfaceCard(
@@ -540,12 +495,8 @@ fun AuralisSurfaceCard(
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(cornerRadius))
-            .background(
-                Brush.linearGradient(
-                    listOf(Color(0xFF0F1524), Color(0xFF0B0F19))
-                )
-            )
-            .border(AuralisTokens.BorderHairline, borderColor, RoundedCornerShape(cornerRadius))
+            .background(Color(0xFF111214))
+            .border(1.dp, borderColor, RoundedCornerShape(cornerRadius))
             .then(
                 if (onClick != null) Modifier.clickable { onClick() } else Modifier
             )
@@ -558,7 +509,7 @@ fun AuralisSurfaceCard(
 }
 
 /**
- * Primary tactile action button in Champagne Gold with dark contrast text.
+ * Primary action button in restrained Champagne Gold.
  */
 @Composable
 fun AuralisPrimaryButton(
@@ -571,7 +522,7 @@ fun AuralisPrimaryButton(
     Button(
         onClick = onClick,
         enabled = enabled,
-        shape = RoundedCornerShape(AuralisTokens.RadiusSmall),
+        shape = RoundedCornerShape(10.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = ImperialGold,
             contentColor = DeepObsidianNoir,
@@ -579,24 +530,24 @@ fun AuralisPrimaryButton(
             disabledContentColor = DarkCharcoal
         ),
         contentPadding = PaddingValues(horizontal = 18.dp, vertical = 12.dp),
-        modifier = modifier.height(48.dp)
+        modifier = modifier.height(46.dp)
     ) {
         if (icon != null) {
-            Icon(imageVector = icon, contentDescription = null, tint = DeepObsidianNoir, modifier = Modifier.size(18.dp))
-            Spacer(modifier = Modifier.width(8.dp))
+            Icon(imageVector = icon, contentDescription = null, tint = DeepObsidianNoir, modifier = Modifier.size(17.dp))
+            Spacer(modifier = Modifier.width(7.dp))
         }
         Text(
             text = text,
             fontFamily = SpaceGroteskFamily,
-            fontWeight = FontWeight.Bold,
-            fontSize = 13.sp,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 12.5.sp,
             letterSpacing = 0.5.sp
         )
     }
 }
 
 /**
- * Outlined tactile secondary button.
+ * Outlined secondary button.
  */
 @Composable
 fun AuralisSecondaryButton(
@@ -607,32 +558,32 @@ fun AuralisSecondaryButton(
 ) {
     OutlinedButton(
         onClick = onClick,
-        shape = RoundedCornerShape(AuralisTokens.RadiusSmall),
+        shape = RoundedCornerShape(10.dp),
         colors = ButtonDefaults.outlinedButtonColors(
             contentColor = PlatinumWhite
         ),
         border = ButtonDefaults.outlinedButtonBorder(enabled = true).copy(
-            brush = Brush.horizontalGradient(listOf(DarkSurfaceBorder, ImperialGold.copy(alpha = 0.5f)))
+            brush = Brush.horizontalGradient(listOf(DarkSurfaceBorder, Color(0xFF383A3E)))
         ),
         contentPadding = PaddingValues(horizontal = 18.dp, vertical = 12.dp),
-        modifier = modifier.height(48.dp)
+        modifier = modifier.height(46.dp)
     ) {
         if (icon != null) {
-            Icon(imageVector = icon, contentDescription = null, tint = ImperialGold, modifier = Modifier.size(18.dp))
-            Spacer(modifier = Modifier.width(8.dp))
+            Icon(imageVector = icon, contentDescription = null, tint = BrushedSilver, modifier = Modifier.size(17.dp))
+            Spacer(modifier = Modifier.width(7.dp))
         }
         Text(
             text = text,
             fontFamily = SpaceGroteskFamily,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 13.sp,
+            fontWeight = FontWeight.Medium,
+            fontSize = 12.5.sp,
             letterSpacing = 0.5.sp
         )
     }
 }
 
 /**
- * Tactile icon button with accessible 44-48dp target.
+ * Tactile icon button with accessible 42-48dp target.
  */
 @Composable
 fun AuralisIconButton(
@@ -641,14 +592,14 @@ fun AuralisIconButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     tint: Color = PlatinumWhite,
-    size: Dp = 44.dp
+    size: Dp = 42.dp
 ) {
     Box(
         modifier = modifier
             .size(size)
             .clip(CircleShape)
-            .background(DarkSurface)
-            .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, CircleShape)
+            .background(Color(0xFF17191C))
+            .border(1.dp, DarkSurfaceBorder, CircleShape)
             .clickable { onClick() },
         contentAlignment = Alignment.Center
     ) {
@@ -656,7 +607,7 @@ fun AuralisIconButton(
             imageVector = icon,
             contentDescription = contentDescription,
             tint = tint,
-            modifier = Modifier.size(20.dp)
+            modifier = Modifier.size(19.dp)
         )
     }
 }
@@ -688,17 +639,17 @@ fun AuralisSettingRow(
         ) {
             Box(
                 modifier = Modifier
-                    .size(38.dp)
+                    .size(36.dp)
                     .clip(CircleShape)
-                    .background(Color(0xFF131A2B))
-                    .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, CircleShape),
+                    .background(Color(0xFF17191C))
+                    .border(1.dp, DarkSurfaceBorder, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
-                    tint = ImperialGold,
-                    modifier = Modifier.size(18.dp)
+                    tint = BrushedSilver,
+                    modifier = Modifier.size(17.dp)
                 )
             }
 
@@ -707,7 +658,7 @@ fun AuralisSettingRow(
             Column {
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
+                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
                     color = PlatinumWhite
                 )
                 if (subtitle != null) {
@@ -754,43 +705,43 @@ fun AuralisEmptyState(
     ) {
         Box(
             modifier = Modifier
-                .size(64.dp)
+                .size(56.dp)
                 .clip(CircleShape)
-                .background(Color(0xFF121828))
-                .border(AuralisTokens.BorderSubtle, DarkSurfaceBorder, CircleShape),
+                .background(Color(0xFF141618))
+                .border(1.dp, DarkSurfaceBorder, CircleShape),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = ImperialGold,
-                modifier = Modifier.size(28.dp)
+                tint = BrushedSilver,
+                modifier = Modifier.size(26.dp)
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(14.dp))
 
         Text(
             text = title,
             fontFamily = SpaceGroteskFamily,
-            fontWeight = FontWeight.Bold,
-            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 15.sp,
             color = PlatinumWhite,
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(6.dp))
+        Spacer(modifier = Modifier.height(5.dp))
 
         Text(
             text = description,
             style = MaterialTheme.typography.bodyMedium,
             color = MutedSlate,
             textAlign = TextAlign.Center,
-            lineHeight = 20.sp
+            lineHeight = 19.sp
         )
 
         if (actionText != null && onAction != null) {
-            Spacer(modifier = Modifier.height(18.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             AuralisPrimaryButton(
                 text = actionText,
                 onClick = onAction

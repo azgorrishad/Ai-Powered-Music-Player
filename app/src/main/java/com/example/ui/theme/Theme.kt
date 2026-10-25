@@ -25,12 +25,12 @@ enum class AppTheme(
 ) {
     OBSIDIAN(
         displayName = "Obsidian",
-        subtitle = "Near-black OLED graphite with restrained champagne gold & platinum silver",
-        primaryColor = Color(0xFFE5B869),
-        secondaryColor = Color(0xFFCBD5E1),
-        backgroundColor = Color(0xFF07090E),
-        surfaceColor = Color(0xFF0E131F),
-        accentColor = Color(0xFFD4AF37)
+        subtitle = "Near-black graphite with warm monochrome & restrained champagne",
+        primaryColor = Color(0xFFC8A86B),
+        secondaryColor = Color(0xFFC1C0BA),
+        backgroundColor = Color(0xFF090A0C),
+        surfaceColor = Color(0xFF111214),
+        accentColor = Color(0xFFB79658)
     ),
     AURORA(
         displayName = "Aurora",
@@ -62,23 +62,23 @@ enum class AppTheme(
 }
 
 val ObsidianColorScheme = darkColorScheme(
-    primary = Color(0xFFE5B869),
-    onPrimary = Color(0xFF1A1305),
-    primaryContainer = Color(0xFF2E2209),
-    onPrimaryContainer = Color(0xFFFFE09C),
-    secondary = Color(0xFFCBD5E1),
-    onSecondary = Color(0xFF1E293B),
-    secondaryContainer = Color(0xFF273344),
-    onSecondaryContainer = Color(0xFFE2E8F0),
-    tertiary = Color(0xFF38BDF8),
-    onTertiary = Color(0xFF00354A),
-    background = Color(0xFF07090E),
-    onBackground = Color(0xFFF4F6FB),
-    surface = Color(0xFF0E131F),
-    onSurface = Color(0xFFF4F6FB),
-    surfaceVariant = Color(0xFF161E2E),
-    onSurfaceVariant = Color(0xFF8E99AC),
-    outline = Color(0xFF222B3D)
+    primary = Color(0xFFC8A86B),
+    onPrimary = Color(0xFF16140E),
+    primaryContainer = Color(0xFF302819),
+    onPrimaryContainer = Color(0xFFF0D9A8),
+    secondary = Color(0xFFC1C0BA),
+    onSecondary = Color(0xFF1A1B18),
+    secondaryContainer = Color(0xFF242629),
+    onSecondaryContainer = Color(0xFFE2E2DC),
+    tertiary = Color(0xFF719AA3),
+    onTertiary = Color(0xFF101B1E),
+    background = Color(0xFF090A0C),
+    onBackground = Color(0xFFF3F1EA),
+    surface = Color(0xFF111214),
+    onSurface = Color(0xFFF3F1EA),
+    surfaceVariant = Color(0xFF181A1D),
+    onSurfaceVariant = Color(0xFFA0A19C),
+    outline = Color(0xFF282A2D)
 )
 
 val AuroraColorScheme = darkColorScheme(

@@ -35,17 +35,14 @@ import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.Equalizer
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.GraphicEq
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.QueueMusic
 import androidx.compose.material.icons.filled.Repeat
 import androidx.compose.material.icons.filled.RepeatOne
 import androidx.compose.material.icons.filled.Shuffle
 import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.SkipPrevious
-import androidx.compose.material.icons.filled.Waves
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -84,19 +81,16 @@ import com.example.ui.theme.DarkCharcoal
 import com.example.ui.theme.DarkSurface
 import com.example.ui.theme.DarkSurfaceBorder
 import com.example.ui.theme.DeepObsidianNoir
-import com.example.ui.theme.ElectricCyan
 import com.example.ui.theme.ImperialGold
-import com.example.ui.theme.LuminousViolet
 import com.example.ui.theme.MutedSlate
 import com.example.ui.theme.NeonPink
 import com.example.ui.theme.PlatinumWhite
 import com.example.ui.theme.SpaceGroteskFamily
-import com.example.ui.theme.VinylGold
 
 /**
- * Signature Now Playing screen for AURALIS.
- * Luxury master console featuring adaptive vinyl artwork, real-time waveform,
- * synchronized lyrics, and tactile playback controls.
+ * Visual Centerpiece: AURALIS Now Playing Screen.
+ * Balanced composition with large album artwork, clear typography,
+ * a precise progress bar, and refined tactile controls.
  */
 @Composable
 fun NowPlayingSheet(
@@ -135,22 +129,9 @@ fun NowPlayingSheet(
 
     val scrollState = rememberScrollState()
 
-    // Smooth subtle vinyl rotation when playing
-    val infiniteTransition = rememberInfiniteTransition(label = "vinyl_spin")
-    val rotation by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 360f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(14000, easing = LinearEasing),
-            repeatMode = AnimRepeatMode.Restart
-        ),
-        label = "vinyl_rotation"
-    )
-    val currentRotation = if (isPlaying) rotation else 0f
-
     var isUserScrubbing by remember { mutableStateOf(false) }
     var scrubPositionMs by remember { mutableFloatStateOf(0f) }
-    var stageMode by remember { mutableStateOf("VINYL") } // "VINYL", "LYRICS", "SPECTRUM"
+    var stageMode by remember { mutableStateOf("ARTWORK") } // "ARTWORK", "LYRICS", "SPECTRUM"
 
     val currentSliderVal = if (isUserScrubbing) scrubPositionMs else progressMs.toFloat()
     val maxSliderVal = durationMs.toFloat().coerceAtLeast(1000f)
@@ -166,20 +147,20 @@ fun NowPlayingSheet(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 22.dp)
+                .padding(horizontal = 24.dp)
                 .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Drag handle
+            // Drag handle pill
             Box(
                 modifier = Modifier
-                    .padding(top = 10.dp, bottom = 6.dp)
-                    .size(width = 38.dp, height = 4.dp)
+                    .padding(top = 10.dp, bottom = 4.dp)
+                    .size(width = 36.dp, height = 4.dp)
                     .clip(CircleShape)
-                    .background(Color(0xFF222B3D))
+                    .background(Color(0xFF232528))
             )
 
-            // Master Header Bar
+            // Top bar
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -192,162 +173,103 @@ fun NowPlayingSheet(
                     modifier = Modifier
                         .size(42.dp)
                         .clip(CircleShape)
-                        .background(DarkSurface)
-                        .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, CircleShape)
+                        .background(Color(0xFF141618))
+                        .border(1.dp, DarkSurfaceBorder, CircleShape)
                         .testTag("collapse_now_playing_button")
                 ) {
                     Icon(
                         imageVector = Icons.Default.KeyboardArrowDown,
                         contentDescription = "Collapse player",
-                        tint = ImperialGold,
+                        tint = BrushedSilver,
                         modifier = Modifier.size(24.dp)
                     )
                 }
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(6.dp)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .size(6.dp)
-                                .clip(CircleShape)
-                                .background(if (isPlaying) ImperialGold else DarkCharcoal)
-                        )
-                        Text(
-                            text = "AURALIS MASTER CONSOLE",
-                            fontFamily = SpaceGroteskFamily,
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight.Bold,
-                            letterSpacing = 2.sp,
-                            color = ImperialGold
-                        )
-                    }
+                    Text(
+                        text = "NOW PLAYING",
+                        fontFamily = SpaceGroteskFamily,
+                        fontSize = 10.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        letterSpacing = 2.sp,
+                        color = MutedSlate
+                    )
                     Text(
                         text = track.album,
                         style = MaterialTheme.typography.bodySmall,
-                        color = MutedSlate,
+                        color = BrushedSilver,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
                 }
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                IconButton(
+                    onClick = onOpenEqualizer,
+                    modifier = Modifier
+                        .size(42.dp)
+                        .clip(CircleShape)
+                        .background(Color(0xFF141618))
+                        .border(1.dp, DarkSurfaceBorder, CircleShape)
+                        .testTag("eq_shortcut_button")
                 ) {
-                    IconButton(
-                        onClick = onOpenEqualizer,
+                    Icon(
+                        imageVector = Icons.Default.Equalizer,
+                        contentDescription = "Open Equalizer",
+                        tint = BrushedSilver,
+                        modifier = Modifier.size(19.dp)
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(14.dp))
+
+            // Stage Switcher Tabs
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(AuralisTokens.RadiusPill))
+                    .background(Color(0xFF121416))
+                    .border(1.dp, DarkSurfaceBorder, RoundedCornerShape(AuralisTokens.RadiusPill))
+                    .padding(3.dp)
+            ) {
+                val tabs = listOf("ARTWORK" to "ARTWORK", "LYRICS" to "LYRICS", "SPECTRUM" to "SPECTRUM")
+                tabs.forEach { (key, label) ->
+                    val isSelected = stageMode == key
+                    Box(
                         modifier = Modifier
-                            .size(42.dp)
-                            .clip(CircleShape)
-                            .background(DarkSurface)
-                            .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, CircleShape)
-                            .testTag("eq_shortcut_button")
+                            .clip(RoundedCornerShape(18.dp))
+                            .background(if (isSelected) Color(0xFF1E2024) else Color.Transparent)
+                            .border(
+                                width = 1.dp,
+                                color = if (isSelected) DarkSurfaceBorder else Color.Transparent,
+                                shape = RoundedCornerShape(18.dp)
+                            )
+                            .clickable { stageMode = key }
+                            .padding(horizontal = 14.dp, vertical = 6.dp)
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.Equalizer,
-                            contentDescription = "Open Sound Lab EQ",
-                            tint = ChampagneGold,
-                            modifier = Modifier.size(19.dp)
+                        Text(
+                            text = label,
+                            fontFamily = SpaceGroteskFamily,
+                            fontSize = 10.sp,
+                            fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
+                            letterSpacing = 1.sp,
+                            color = if (isSelected) PlatinumWhite else MutedSlate
                         )
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(10.dp))
-
-            // Stage Mode Switcher (Vinyl Art, Synced Lyrics, Audio Spectrum)
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .clip(RoundedCornerShape(AuralisTokens.RadiusPill))
-                    .background(Color(0xFF0C101A))
-                    .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, RoundedCornerShape(AuralisTokens.RadiusPill))
-                    .padding(3.dp)
-            ) {
-                val isVinyl = stageMode == "VINYL"
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(18.dp))
-                        .background(if (isVinyl) Color(0xFF1B2336) else Color.Transparent)
-                        .border(
-                            width = AuralisTokens.BorderHairline,
-                            color = if (isVinyl) ImperialGold.copy(alpha = 0.6f) else Color.Transparent,
-                            shape = RoundedCornerShape(18.dp)
-                        )
-                        .clickable { stageMode = "VINYL" }
-                        .padding(horizontal = 14.dp, vertical = 6.dp)
-                ) {
-                    Text(
-                        text = "VINYL STAGE",
-                        fontFamily = SpaceGroteskFamily,
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = 1.sp,
-                        color = if (isVinyl) ImperialGold else DarkCharcoal
-                    )
-                }
-
-                val isLyrics = stageMode == "LYRICS"
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(18.dp))
-                        .background(if (isLyrics) Color(0xFF1B2336) else Color.Transparent)
-                        .border(
-                            width = AuralisTokens.BorderHairline,
-                            color = if (isLyrics) ChampagneGold.copy(alpha = 0.6f) else Color.Transparent,
-                            shape = RoundedCornerShape(18.dp)
-                        )
-                        .clickable { stageMode = "LYRICS" }
-                        .padding(horizontal = 14.dp, vertical = 6.dp)
-                ) {
-                    Text(
-                        text = "LYRICS",
-                        fontFamily = SpaceGroteskFamily,
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = 1.sp,
-                        color = if (isLyrics) ChampagneGold else DarkCharcoal
-                    )
-                }
-
-                val isSpectrum = stageMode == "SPECTRUM"
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(18.dp))
-                        .background(if (isSpectrum) Color(0xFF1B2336) else Color.Transparent)
-                        .border(
-                            width = AuralisTokens.BorderHairline,
-                            color = if (isSpectrum) BrushedSilver.copy(alpha = 0.6f) else Color.Transparent,
-                            shape = RoundedCornerShape(18.dp)
-                        )
-                        .clickable { stageMode = "SPECTRUM" }
-                        .padding(horizontal = 14.dp, vertical = 6.dp)
-                ) {
-                    Text(
-                        text = "SPECTRUM",
-                        fontFamily = SpaceGroteskFamily,
-                        fontSize = 10.sp,
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = 1.sp,
-                        color = if (isSpectrum) BrushedSilver else DarkCharcoal
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(18.dp))
 
             // Main Visual Stage
             if (stageMode == "LYRICS") {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(280.dp)
+                        .height(290.dp)
                         .clip(RoundedCornerShape(AuralisTokens.RadiusLarge))
-                        .background(Color(0xFF0A0E18))
-                        .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, RoundedCornerShape(AuralisTokens.RadiusLarge))
+                        .background(Color(0xFF111214))
+                        .border(1.dp, DarkSurfaceBorder, RoundedCornerShape(AuralisTokens.RadiusLarge))
                 ) {
                     SyncedLyricsView(
                         lyrics = lyrics,
@@ -363,116 +285,32 @@ fun NowPlayingSheet(
                     currentPositionMs = progressMs,
                     durationMs = durationMs,
                     track = track,
-                    height = 280.dp,
+                    height = 290.dp,
                     showControls = true,
                     modifier = Modifier.fillMaxWidth()
                 )
             } else {
-                // Vinyl Disc Artwork with Brushed Metallic Chamfer Outer Edge & Micro-Grooves
+                // Large, beautiful album artwork
                 Box(
-                    contentAlignment = Alignment.Center,
                     modifier = Modifier
                         .size(280.dp)
-                        .padding(6.dp)
+                        .clip(RoundedCornerShape(22.dp))
+                        .background(Color(0xFF15171A))
+                        .border(1.dp, DarkSurfaceBorder, RoundedCornerShape(22.dp)),
+                    contentAlignment = Alignment.Center
                 ) {
-                    // Subtle ambient back-glow
-                    Box(
-                        modifier = Modifier
-                            .size(266.dp)
-                            .clip(CircleShape)
-                            .background(
-                                Brush.radialGradient(
-                                    listOf(
-                                        ImperialGold.copy(alpha = 0.16f),
-                                        Color.Transparent
-                                    )
-                                )
-                            )
+                    AsyncImage(
+                        model = track.artworkUrl,
+                        contentDescription = "Cover for ${track.title}",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.fillMaxSize()
                     )
-
-                    // Vinyl Disc outer metallic chamfer
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .size(256.dp)
-                            .clip(CircleShape)
-                            .background(Color(0xFF090D15))
-                            .border(
-                                width = 2.dp,
-                                brush = Brush.sweepGradient(
-                                    listOf(
-                                        ImperialGold.copy(alpha = 0.7f),
-                                        Color(0xFF161E2E),
-                                        ChampagneGold.copy(alpha = 0.8f),
-                                        Color(0xFF0C101A),
-                                        ImperialGold.copy(alpha = 0.7f)
-                                    )
-                                ),
-                                shape = CircleShape
-                            )
-                    ) {
-                        Canvas(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .rotate(currentRotation)
-                        ) {
-                            val center = Offset(size.width / 2f, size.height / 2f)
-                            val maxRadius = size.width / 2f
-
-                            val grooveFractions = listOf(0.94f, 0.88f, 0.82f, 0.76f, 0.70f, 0.64f, 0.58f)
-                            for (fraction in grooveFractions) {
-                                drawCircle(
-                                    color = Color(0xFF141A28),
-                                    radius = maxRadius * fraction,
-                                    center = center,
-                                    style = Stroke(width = 1f)
-                                )
-                            }
-                        }
-
-                        // Center Label with Track Cover Art and Gold Bezel
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier
-                                .size(118.dp)
-                                .clip(CircleShape)
-                                .border(
-                                    width = 2.dp,
-                                    brush = Brush.sweepGradient(
-                                        listOf(
-                                            ImperialGold,
-                                            ChampagneGold,
-                                            Color(0xFF1B2436),
-                                            ImperialGold
-                                        )
-                                    ),
-                                    shape = CircleShape
-                                )
-                                .rotate(currentRotation)
-                        ) {
-                            AsyncImage(
-                                model = track.artworkUrl,
-                                contentDescription = "Cover for ${track.title}",
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier.fillMaxSize()
-                            )
-
-                            // Heavy Spindle Brass Hole
-                            Box(
-                                modifier = Modifier
-                                    .size(20.dp)
-                                    .clip(CircleShape)
-                                    .background(Color(0xFF070A12))
-                                    .border(1.5.dp, ImperialGold, CircleShape)
-                            )
-                        }
-                    }
                 }
             }
 
-            Spacer(modifier = Modifier.height(18.dp))
+            Spacer(modifier = Modifier.height(22.dp))
 
-            // Track Title, Artist, & Favorite Heart
+            // Track Information & Favorite
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
@@ -483,7 +321,8 @@ fun NowPlayingSheet(
                         text = track.title,
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            fontSize = 22.sp
+                            fontSize = 21.sp,
+                            letterSpacing = (-0.25).sp
                         ),
                         color = PlatinumWhite,
                         maxLines = 1,
@@ -502,10 +341,10 @@ fun NowPlayingSheet(
                 IconButton(
                     onClick = { onToggleFavorite(track) },
                     modifier = Modifier
-                        .size(46.dp)
+                        .size(44.dp)
                         .clip(CircleShape)
-                        .background(if (track.isFavorite) NeonPink.copy(alpha = 0.15f) else DarkSurface)
-                        .border(AuralisTokens.BorderHairline, if (track.isFavorite) NeonPink.copy(alpha = 0.5f) else DarkSurfaceBorder, CircleShape)
+                        .background(Color(0xFF141618))
+                        .border(1.dp, DarkSurfaceBorder, CircleShape)
                         .testTag("favorite_button")
                 ) {
                     Icon(
@@ -517,84 +356,9 @@ fun NowPlayingSheet(
                 }
             }
 
-            // Audiophile Badges row (Hi-Res Master, BPM, Mood)
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 10.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(6.dp))
-                        .background(Color(0xFF121826))
-                        .border(AuralisTokens.BorderHairline, ImperialGold.copy(alpha = 0.45f), RoundedCornerShape(6.dp))
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(5.dp)
-                    ) {
-                        Text(
-                            text = "HI-RES",
-                            fontFamily = SpaceGroteskFamily,
-                            fontSize = 9.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = ImperialGold
-                        )
-                        Box(
-                            modifier = Modifier
-                                .size(3.dp)
-                                .clip(CircleShape)
-                                .background(ImperialGold)
-                        )
-                        Text(
-                            text = "24-BIT / 96kHz",
-                            fontFamily = SpaceGroteskFamily,
-                            fontSize = 9.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = BrushedSilver
-                        )
-                    }
-                }
+            Spacer(modifier = Modifier.height(14.dp))
 
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(6.dp))
-                        .background(Color(0xFF101624))
-                        .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, RoundedCornerShape(6.dp))
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
-                ) {
-                    Text(
-                        text = "${track.bpm} BPM",
-                        fontFamily = SpaceGroteskFamily,
-                        fontSize = 9.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = ChampagneGold
-                    )
-                }
-
-                Box(
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(6.dp))
-                        .background(Color(0xFF151222))
-                        .border(AuralisTokens.BorderHairline, LuminousViolet.copy(alpha = 0.4f), RoundedCornerShape(6.dp))
-                        .padding(horizontal = 8.dp, vertical = 4.dp)
-                ) {
-                    Text(
-                        text = track.mood.uppercase(),
-                        fontFamily = SpaceGroteskFamily,
-                        fontSize = 9.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = LuminousViolet
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(6.dp))
-
-            // Thin, elegant Slider & Duration Readouts
+            // Precise Progress Bar & Time Readouts
             Slider(
                 value = currentSliderVal,
                 onValueChange = {
@@ -609,7 +373,7 @@ fun NowPlayingSheet(
                 colors = SliderDefaults.colors(
                     thumbColor = ImperialGold,
                     activeTrackColor = ImperialGold,
-                    inactiveTrackColor = Color(0xFF1B2336)
+                    inactiveTrackColor = Color(0xFF222428)
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -623,22 +387,22 @@ fun NowPlayingSheet(
                 Text(
                     text = formatTimeMs(currentSliderVal.toLong()),
                     fontFamily = SpaceGroteskFamily,
-                    fontSize = 11.5.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    letterSpacing = 1.sp,
-                    color = ImperialGold
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Medium,
+                    letterSpacing = 0.5.sp,
+                    color = PlatinumWhite
                 )
                 Text(
                     text = formatTimeMs(durationMs),
                     fontFamily = SpaceGroteskFamily,
-                    fontSize = 11.5.sp,
+                    fontSize = 11.sp,
                     fontWeight = FontWeight.Normal,
-                    letterSpacing = 1.sp,
+                    letterSpacing = 0.5.sp,
                     color = MutedSlate
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(18.dp))
 
             // Balanced Playback Controls Row
             Row(
@@ -646,33 +410,30 @@ fun NowPlayingSheet(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // Shuffle Button (With Smart Mood Shuffle badge)
+                // Shuffle Button
                 IconButton(
                     onClick = onToggleShuffle,
                     modifier = Modifier
-                        .size(46.dp)
+                        .size(44.dp)
                         .clip(CircleShape)
-                        .background(if (isShuffleEnabled) Color(0xFF131D2E) else Color.Transparent)
-                        .then(
-                            if (isShuffleEnabled) Modifier.border(AuralisTokens.BorderHairline, ImperialGold.copy(alpha = 0.5f), CircleShape)
-                            else Modifier
-                        )
+                        .background(if (isShuffleEnabled) Color(0xFF1A1C20) else Color.Transparent)
+                        .border(1.dp, if (isShuffleEnabled) ImperialGold.copy(alpha = 0.6f) else Color.Transparent, CircleShape)
                         .testTag("shuffle_button")
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Icon(
                             imageVector = Icons.Default.Shuffle,
                             contentDescription = "Shuffle",
-                            tint = if (isShuffleEnabled) ImperialGold else DarkCharcoal,
-                            modifier = Modifier.size(22.dp)
+                            tint = if (isShuffleEnabled) ImperialGold else MutedSlate,
+                            modifier = Modifier.size(21.dp)
                         )
                         if (isSmartMoodShuffle) {
                             Icon(
                                 imageVector = Icons.Default.AutoAwesome,
-                                contentDescription = "AI Smart Mood Active",
+                                contentDescription = "AI Shuffle Active",
                                 tint = ImperialGold,
                                 modifier = Modifier
-                                    .size(10.dp)
+                                    .size(9.dp)
                                     .align(Alignment.TopEnd)
                             )
                         }
@@ -683,32 +444,27 @@ fun NowPlayingSheet(
                 IconButton(
                     onClick = onSkipPrevious,
                     modifier = Modifier
-                        .size(52.dp)
+                        .size(48.dp)
                         .clip(CircleShape)
-                        .background(DarkSurface)
-                        .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, CircleShape)
+                        .background(Color(0xFF141618))
+                        .border(1.dp, DarkSurfaceBorder, CircleShape)
                         .testTag("skip_previous_button")
                 ) {
                     Icon(
                         imageVector = Icons.Default.SkipPrevious,
                         contentDescription = "Previous Track",
                         tint = PlatinumWhite,
-                        modifier = Modifier.size(28.dp)
+                        modifier = Modifier.size(26.dp)
                     )
                 }
 
-                // Tactile Center Play/Pause Knob in Champagne Gold
+                // Primary Play / Pause Control
                 Box(
                     contentAlignment = Alignment.Center,
                     modifier = Modifier
-                        .size(70.dp)
+                        .size(64.dp)
                         .clip(CircleShape)
-                        .background(
-                            Brush.linearGradient(
-                                listOf(ImperialGold, ChampagneGold, VinylGold)
-                            )
-                        )
-                        .border(1.5.dp, Color(0xFFFFF2C6), CircleShape)
+                        .background(ImperialGold)
                 ) {
                     IconButton(
                         onClick = onTogglePlayPause,
@@ -720,7 +476,7 @@ fun NowPlayingSheet(
                             imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
                             contentDescription = if (isPlaying) "Pause" else "Play",
                             tint = DeepObsidianNoir,
-                            modifier = Modifier.size(34.dp)
+                            modifier = Modifier.size(32.dp)
                         )
                     }
                 }
@@ -729,31 +485,28 @@ fun NowPlayingSheet(
                 IconButton(
                     onClick = onSkipNext,
                     modifier = Modifier
-                        .size(52.dp)
+                        .size(48.dp)
                         .clip(CircleShape)
-                        .background(DarkSurface)
-                        .border(AuralisTokens.BorderHairline, DarkSurfaceBorder, CircleShape)
+                        .background(Color(0xFF141618))
+                        .border(1.dp, DarkSurfaceBorder, CircleShape)
                         .testTag("skip_next_button")
                 ) {
                     Icon(
                         imageVector = Icons.Default.SkipNext,
                         contentDescription = "Next Track",
                         tint = PlatinumWhite,
-                        modifier = Modifier.size(28.dp)
+                        modifier = Modifier.size(26.dp)
                     )
                 }
 
-                // Repeat Mode Button
+                // Repeat Button
                 IconButton(
                     onClick = onToggleRepeat,
                     modifier = Modifier
-                        .size(46.dp)
+                        .size(44.dp)
                         .clip(CircleShape)
-                        .background(if (repeatMode != RepeatMode.OFF) Color(0xFF131D2E) else Color.Transparent)
-                        .then(
-                            if (repeatMode != RepeatMode.OFF) Modifier.border(AuralisTokens.BorderHairline, ImperialGold.copy(alpha = 0.5f), CircleShape)
-                            else Modifier
-                        )
+                        .background(if (repeatMode != RepeatMode.OFF) Color(0xFF1A1C20) else Color.Transparent)
+                        .border(1.dp, if (repeatMode != RepeatMode.OFF) ImperialGold.copy(alpha = 0.6f) else Color.Transparent, CircleShape)
                         .testTag("repeat_button")
                 ) {
                     Icon(
@@ -762,50 +515,41 @@ fun NowPlayingSheet(
                             else -> Icons.Default.Repeat
                         },
                         contentDescription = "Repeat: $repeatMode",
-                        tint = if (repeatMode != RepeatMode.OFF) ImperialGold else DarkCharcoal,
-                        modifier = Modifier.size(22.dp)
+                        tint = if (repeatMode != RepeatMode.OFF) ImperialGold else MutedSlate,
+                        modifier = Modifier.size(21.dp)
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(18.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
-            // Gemini AI Dynamic Mood Selector
-            GeminiMoodSelectorDropdown(
-                selectedMood = selectedMood,
-                onMoodSelected = onMoodSelected,
-                labelPrefix = "Gemini Mood Strategy"
-            )
-
-            Spacer(modifier = Modifier.height(18.dp))
-
-            // DSP Sound Architecture Quick Presets
+            // Sound Architecture Presets
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "DSP SOUND ARCHITECTURE",
+                    text = "EQUALIZER PRESETS",
                     fontFamily = SpaceGroteskFamily,
                     fontSize = 10.sp,
-                    fontWeight = FontWeight.Bold,
-                    letterSpacing = 1.5.sp,
-                    color = ImperialGold
+                    fontWeight = FontWeight.SemiBold,
+                    letterSpacing = 1.2.sp,
+                    color = MutedSlate
                 )
                 Text(
                     text = activePreset.name.uppercase(),
                     fontFamily = SpaceGroteskFamily,
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Medium,
-                    color = MutedSlate
+                    color = ImperialGold
                 )
             }
 
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 10.dp),
+                    .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(allPresets) { preset ->
@@ -813,10 +557,10 @@ fun NowPlayingSheet(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(AuralisTokens.RadiusSmall))
-                            .background(if (isSelected) Color(0xFF1B2438) else Color(0xFF0F1524))
+                            .background(if (isSelected) Color(0xFF1E2125) else Color(0xFF111214))
                             .border(
-                                AuralisTokens.BorderHairline,
-                                if (isSelected) ImperialGold else DarkSurfaceBorder,
+                                1.dp,
+                                if (isSelected) ImperialGold.copy(alpha = 0.7f) else DarkSurfaceBorder,
                                 RoundedCornerShape(AuralisTokens.RadiusSmall)
                             )
                             .clickable { onSelectPreset(preset) }
@@ -826,8 +570,8 @@ fun NowPlayingSheet(
                             text = preset.name,
                             fontFamily = SpaceGroteskFamily,
                             fontSize = 11.5.sp,
-                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                            color = if (isSelected) ImperialGold else MutedSlate
+                            fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
+                            color = if (isSelected) PlatinumWhite else MutedSlate
                         )
                     }
                 }
